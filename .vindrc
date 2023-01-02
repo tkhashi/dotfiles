@@ -1,0 +1,20 @@
+set easyclick_fontsize = 25
+"set keybrd_layout = US (101/102)
+
+inoremap FF easy_click_left
+inoremap <c-:> easy_click_left
+inoremap <c-[> <esc>
+inoremap <c-]> <esc>
+inoremap <C-8> <F8>
+inoremap <c-g> <esc-left>
+inoremap WE window_resizer 
+
+gnnoremap <c-[> <esc>
+gnnoremap <c-]> <esc>
+gnnoremap FF easy_click_left
+
+gvnoremap <c-[> <esc-left>
+gvnoremap <c-]> <esc-left>
+command <c-h> <bs>
+command <c-[> <esc>
+command <c-]> <esc>
