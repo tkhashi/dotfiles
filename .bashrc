@@ -36,3 +36,6 @@ alias fssa='npx firebase emulators:start --import ../../Desktop/202209_atsugi'
 # Application
 alias chrome='/c/Program\ Files/Google/Chrome/Application/chrome.exe'
 export LANG=ja_JP.UTF-8
+#export XDG_CONFIG_HOME=%LOCALAPPDATA%\
+# eval "$(starship init bash)"
+eval "$(oh-my-posh init bash --config ~/jandedobbeleer.omp.json)"
