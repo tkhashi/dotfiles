@@ -51,7 +51,12 @@ require('packer').startup(function(use)
     --requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+  use {
+    'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+    config = function()
+      require('Comment').setup()
+    end
+  }
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
