@@ -1,8 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+
   "palette": {
-    "base_background": "#18354c",
-    "base_foreground": "#ffc107",
+    "_base_background": "#18354c",
+    "base_background": "#ffc107",
     "git": "#ff8f07"
   },
   "blocks": [
@@ -11,8 +12,8 @@
       "segments": [
         {
           "background": "p:base_background",
-          "foreground": "p:base_foreground",
-          "leading_diamond": "\ue0b6",
+          "foreground": "#222",
+          "leading_diamond": "\u256d\u2500\ue0b6",
           "properties": {
             "style": "folder"
           },
@@ -22,8 +23,8 @@
           "type": "path"
         },
         {
-          "background": "p:base_background",
-          "foreground": "p:git",
+          "background": "p:git",
+          "foreground": "#222",
           "powerline_symbol": "\ue0b0",
           "properties": {
             "fetch_stash_count": true,
@@ -31,19 +32,17 @@
           },
           "style": "powerline",
           "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
-          "type": "git"
-        },
-        {
-          "background": "p:base_foreground",
-          "foreground": "p:base_background",
-          "powerline_symbol": "\ue0b0",
-          "style": "powerline",
-          "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
-          "type": "python"
+          "type": "git",
+          "background_templates": [
+             "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}",
+             "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
+             "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+             "{{ if gt .Behind 0 }}#B388FB{{ end }}"
+           ]
         },
         {
           "foreground": "p:base_background",
-          "background": "p:base_foreground",
+          "background": "p:base_background",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": " \uf0e7 ",
@@ -53,43 +52,19 @@
       "type": "prompt"
     },
     {
-      "alignment": "right",
-      "segments": [
-        {
-          "foreground": "#fff",
-          "background": "p:base_background",
-          "style": "plain",
-          "template": " \uf64f {{ .CurrentDate | date .Format }} ",
-          "type": "time"
-        },
-        {
-          "foreground": "#fff",
-          "background": "p:base_background",
-          "style": "plain",
-          "template": "|",
-          "type": "text"
-        },
-        {
-          "foreground": "#fff",
-          "background": "p:base_background",
-          "properties": {
-            "always_enabled": true
-          },
-          "style": "plain",
-          "template": " \ufa1e{{ .FormattedMs }} ",
-          "type": "executiontime"
-        }
-      ],
-      "type": "rprompt"
-    },
-    {
       "alignment": "left",
       "newline": true,
       "segments": [
         {
-          "foreground": "p:base_foreground",
+          "foreground": "p:base_background",
           "style": "plain",
-          "template": " \u25b6",
+          "template": "\u2570\u2500",
+          "type": "text"
+        },
+        {
+          "foreground": "#fff",
+          "style": "plain",
+          "template": "\ue285\ufb00 ",
           "type": "text"
         }
       ],
