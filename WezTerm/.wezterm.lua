@@ -3,9 +3,9 @@ local act = wezterm.action
 
 return {
   default_cwd = "C:/Users/pupod/work",
-  default_prog = { 'C:/Program Files/Git/bin/bash.exe', '-l' },
+  default_prog = { 'C:/Program Files/Git/bin/bash.exe', '-i', '-l' },
   color_scheme = 'BlulocoDark',
-  font_size = 11.0,
+  font_size = 10.0,
   adjust_window_size_when_changing_font_size = false,
 
   -- Add serach mode
