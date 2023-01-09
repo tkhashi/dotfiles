@@ -11,6 +11,17 @@
       "alignment": "left",
       "segments": [
         {
+          "style": "plain",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
           "background": "p:base_background",
           "foreground": "#222",
           "leading_diamond": "\u256d\u2500\ue0b6",
