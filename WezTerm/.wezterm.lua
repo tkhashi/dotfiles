@@ -7,6 +7,7 @@ return {
   color_scheme = 'BlulocoDark',
   font_size = 10.0,
   adjust_window_size_when_changing_font_size = false,
+  enable_scroll_bar = true,
 
   -- Add serach mode
   -- (lastest main branch is default existing search mode. It's scoop installed it no search mode.)

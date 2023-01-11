@@ -5,8 +5,10 @@ alias tree='tree -N'
 # Directory
 alias wcd='cd ~/work/'
 alias scd='cd ~/work/smakan/'
-alias dcd='cd ~/Desktop'
+alias dcd='cd ~/work/dotfiles/'
 alias rcd='cd ~/work/smakan.module.report/'
+alias vbrc='vim ~/.bashrc'
+alias nvnv='nvim ~/work/dotfiles/nvim/'
 
 # Git
 alias g='git'
