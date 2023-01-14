@@ -4,7 +4,10 @@ local act = wezterm.action
 return {
   default_cwd = "C:/Users/pupod/work",
   default_prog = { 'C:/Program Files/Git/bin/bash.exe', '-i', '-l' },
+  window_close_confirmation = "NeverPrompt",
+  cursor_blink_rate = 800,
   color_scheme = 'BlulocoDark',
+  default_cursor_style = "BlinkingBar",
   font_size = 10.0,
   adjust_window_size_when_changing_font_size = false,
   enable_scroll_bar = true,
