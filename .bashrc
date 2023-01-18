@@ -1,13 +1,13 @@
 #set -o vi
 # Command
 alias tree='tree -N'
+alias lsgr='ls -la | grep'
 
 # Directory
 alias wcd='cd ~/work/'
 alias scd='cd ~/work/smakan/'
 alias dcd='cd ~/work/dotfiles/'
 alias rcd='cd ~/work/smakan.module.report/'
-alias vbrc='vim ~/.bashrc'
 alias nvnv='nvim ~/work/dotfiles/nvim/'
 
 # Git
@@ -30,13 +30,23 @@ alias gl='git log'
 alias gpl='git pull'
 alias gp='git push'
 
+# GITLAB
+alias gltl='glab mr list | grep $(git rev-parse --abbrev-ref HEAD)'
+alias glls='glab mr list'
+
 #SMKN
 alias sm='git switch SMKN2-'
 
 #GCP
 alias fss='npx firebase emulators:start'
 alias fssa='npx firebase emulators:start --import ../../Desktop/202209_atsugi'
+
 # Application
 alias chrome='/c/Program\ Files/Google/Chrome/Application/chrome.exe'
+alias n='nvim'
 export LANG=ja_JP.UTF-8
 eval "$(oh-my-posh init bash --config ~/jandedobbeleer.omp.json)"
+
+# completion
+source <(jira completion bash)
+source <(glab completion -s bash)
