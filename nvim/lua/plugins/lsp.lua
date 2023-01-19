@@ -1,3 +1,4 @@
+local diagnostic = require "vim.diagnostic"
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -51,11 +52,13 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
+  nimls = {},
   tsserver = {},
   jsonls = {},
 
   sumneko_lua = {
     Lua = {
+      diagnostic = { globals = 'vim' },
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },

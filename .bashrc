@@ -44,8 +44,11 @@ alias fssa='npx firebase emulators:start --import ../../Desktop/202209_atsugi'
 # Application
 alias chrome='/c/Program\ Files/Google/Chrome/Application/chrome.exe'
 alias n='nvim'
+alias nv='neovide'
 export LANG=ja_JP.UTF-8
 eval "$(oh-my-posh init bash --config ~/jandedobbeleer.omp.json)"
+# eval "$(starship init bash)"
+eval "$(zoxide init bash)"
 
 # completion
 source <(jira completion bash)
