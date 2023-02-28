@@ -39,7 +39,7 @@ alias sm='git switch SMKN2-'
 
 #GCP
 alias fss='npx firebase emulators:start'
-alias fssa='npx firebase emulators:start --import ../../Desktop/202209_atsugi'
+alias fssa='npx firebase emulators:start --import ../../Desktop/202209_atsugi_new'
 
 # Application
 alias chrome='/c/Program\ Files/Google/Chrome/Application/chrome.exe'
