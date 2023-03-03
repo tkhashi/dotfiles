@@ -165,8 +165,14 @@ $Ctrl::
     }
     Return
 
-Pause::Send, {vkF2} ;ひらがな/カタカナ切り替え
-F13::Send, {vk1D} ;F13＝英数切り替え
+;F13＝英数切り替え(F13はUHK側で左親指に当てている)
+F13::
+  IME_SET(0)
+  Return 
+;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
+Pause::
+  IME_SET(1)
+  Return
 
 ;Ctrl + jknp => 矢印キー
 
