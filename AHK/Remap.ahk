@@ -152,24 +152,16 @@ IME_SET(SetSts, WinTitle="A")    {
 
 Return
 
-; Ctrlを修飾キーとして扱うための準備
-; Ctrlを押し続けている限りリピートせず待機
-$Ctrl::
-    startTime := A_TickCount
-    KeyWait, Ctrl
-    keyPressDuration := A_TickCount - startTime
-    ; Ctrlを押している間に他のホットキーが発動した場合は入力しない
-    ; Ctrlを長押ししていた場合も入力しない
-    If (A_ThisHotkey == "$Ctrl" and keyPressDuration < 20000) {
-        Send,{Ctrl}
-    }
-    Return
-
-Pause::IME_SET(1) ;ひらがな/カタカナ切り替え
-F13::IME_SET(0) ;F13＝英数切り替え
+;F13＝英数切り替え(F13はUHK側で左親指に当てている)
+F13::
+  IME_SET(0)
+  Return 
+;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
+Pause::
+  IME_SET(1)
+  Return
 
 ;Ctrl + jknp => 矢印キー
-
 <^H::Send, {BS}
 <^J::Send, {left}
 <^K::Send, {right}
