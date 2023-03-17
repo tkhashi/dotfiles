@@ -24,10 +24,10 @@ IME_SET(SetSts, WinTitle="A")    {
           ,  Int, SetSts) ;lParam  : 0 or 1
 }
 
-;~Esc::IME_SET(0)
-;~^[::IME_SET(0)
-;~^'::IME_SET(0)
-;~^@::IME_SET(0)
+~Esc::IME_SET(0)
+~^[::IME_SET(0)
+~^'::IME_SET(0)
+~^@::IME_SET(0)
 
 ;------------------------------------------------------------------------------------
 ;Windowが切り替わるとIMEオフになる
@@ -165,8 +165,8 @@ $Ctrl::
     }
     Return
 
-Pause::Send, {vkF2} ;ひらがな/カタカナ切り替え
-F13::Send, {vk1D} ;F13＝英数切り替え
+Pause::IME_SET(1) ;ひらがな/カタカナ切り替え
+F13::IME_SET(0) ;F13＝英数切り替え
 
 ;Ctrl + jknp => 矢印キー
 
