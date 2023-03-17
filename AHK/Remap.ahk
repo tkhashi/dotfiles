@@ -24,10 +24,11 @@ IME_SET(SetSts, WinTitle="A")    {
           ,  Int, SetSts) ;lParam  : 0 or 1
 }
 
-~Esc::IME_SET(0)
-~^[::IME_SET(0)
-~^'::IME_SET(0)
-~^@::IME_SET(0)
+
+;~Esc::IME_SET(0)
+;~^[::IME_SET(0)
+;~^'::IME_SET(0)
+;~^@::IME_SET(0)
 
 ;------------------------------------------------------------------------------------
 ;Windowが切り替わるとIMEオフになる
@@ -198,10 +199,22 @@ Pause::
 !>^<^N::Send, ^!{down}
 !>^<^P::Send, ^!{up}
 
-<^]::Send,{Esc}{vk1D}
-<^[::Send,{Esc}{vk1D}
-+<^[::Send,+{Esc}{vk1D}
-+<^]::Send,+{Esc}{vk1D}
+<^]::
+  Send, {Esc}
+  IME_SET(0)
+  Return
+<^[::
+  Send, {Esc}
+  IME_SET(0)
+  Return
++<^[::
+  Send, {Esc}
+  IME_SET(0)
+  Return
++<^]::
+  Send, {Esc}
+  IME_SET(0)
+  Return
 
 >^Q::Send, !{F4}
 ^4::Send, ^{F4}
@@ -209,8 +222,14 @@ Pause::
 >^]::Send, {Browser_Forward}
 
 ;JISキーボード用
-<^@::Send,{Esc}{vk1D}
-+<^@::Send,+{Esc}{vk1D}
+<^@::
+  Send, {Esc}
+  IME_SET(0)
+  Return
++<^@::
+  Send, {Esc}
+  IME_SET(0)
+  Return
 <^vk1C::Send, {AppsKey}
 
 ;ウィンドウサイズ変更
