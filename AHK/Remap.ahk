@@ -24,10 +24,6 @@ IME_SET(SetSts, WinTitle="A")    {
           ,  Int, SetSts) ;lParam  : 0 or 1
 }
 
-Enter::
-  Send, {Enter}
-  IME_SET(0)
-  
 ;~Esc::IME_SET(0)
 ;~^[::IME_SET(0)
 ;~^'::IME_SET(0)
@@ -140,11 +136,11 @@ Return
 
 ;F13＝英数切り替え(F13はUHK側で左親指に当てている)
 F13::
-  IME_SET(0)
+  Send, {vk1C} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
   Return 
 ;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
 Pause::
-  IME_SET(1)
+  Send, {vk1D} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
   Return
 
 ;Ctrl + jknp => 矢印キー
@@ -308,6 +304,7 @@ return
 
 ; 変換を修飾キーとして扱うための準備
 ; 変換を押し続けている限りリピートせず待機
+; vk1C == [変換キー]
 $vk1C::
     startTime := A_TickCount
     KeyWait, vk1C
@@ -315,14 +312,17 @@ $vk1C::
     ; 変換を押している間に他のホットキーが発動した場合は入力しない
     ; 変換を長押ししていた場合も入力しない
     If (A_ThisHotkey == "$vk1C" and keyPressDuration < 200) {
+        IME_SET(1)
         Send,{vk1C}
     }
     Return
+; vk1D == [無変換キー]
 $vk1D::
     startTime := A_TickCount
     KeyWait, vk1D
     keyPressDuration := A_TickCount - startTime
     If (A_ThisHotkey == "$vk1D" and keyPressDuration < 200) {
+        IME_SET(0)
         Send,{vk1D}
     }
     Return
