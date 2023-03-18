@@ -30,24 +30,6 @@ IME_SET(SetSts, WinTitle="A")    {
 ;~^'::IME_SET(0)
 ;~^@::IME_SET(0)
 
-;------------------------------------------------------------------------------------
-;Windowが切り替わるとIMEオフになる
-;------------------------------------------------------------------------------------
-;Ghoster.ahkを切った時用
-;START:
-;WinGet,oldid,ID,A
-;WinGet,oldtop,ExStyle,ahk_id %oldid%
-
-;LOOP:
-;Sleep,50
-;WinGet,winid,ID,A
-;If winid<>%oldid%
-;{
-  ;IME_SET(0)
-  ;oldid=%winid%
-;}
-;Goto,LOOP
-
 ;///////////////////////////////エディターリマップ///////////////////////////////////
 #HotkeyInterval 100
 ; 主要なキーをホットキーとして検知可能にしておく
