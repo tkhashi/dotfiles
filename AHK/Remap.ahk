@@ -136,11 +136,13 @@ Return
 
 ;F13＝英数切り替え(F13はUHK側で左親指に当てている)
 F13::
-  Send, {vk1C} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
+  IME_SET(0)
+  ;Send, {vk1C} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
   Return 
 ;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
 Pause::
-  Send, {vk1D} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
+  IME_SET(1)
+  ;Send, {vk1D} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
   Return
 
 ;Ctrl + jknp => 矢印キー
@@ -189,11 +191,11 @@ Pause::
   IME_SET(0)
   Return
 +<^[::
-  Send, {Esc}
+  Send, +{Esc}
   IME_SET(0)
   Return
 +<^]::
-  Send, {Esc}
+  Send, +{Esc}
   IME_SET(0)
   Return
 
@@ -208,7 +210,7 @@ Pause::
   IME_SET(0)
   Return
 +<^@::
-  Send, {Esc}
+  Send, +{Esc}
   IME_SET(0)
   Return
 <^vk1C::Send, {AppsKey}
@@ -348,6 +350,7 @@ $vk1D::
     {
         MoveX := 0, MoveY := 0
         MoveY += GetKeyState("I", "P") ? -20 : 0     ; 変換キーと一緒にIJKLが押されている間はカーソル座標を変化させ続ける
+        MoveX += GetKeyState("J", "P") ? -20 : 0
         MoveX += GetKeyState("J", "P") ? -20 : 0
         MoveY += GetKeyState("K", "P") ? 20 : 0
         MoveX += GetKeyState("L", "P") ? 20 : 0
