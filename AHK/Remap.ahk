@@ -347,11 +347,11 @@ $vk1D::
     While (GetKeyState("vk1C", "P"))                 ; 変換キーが押され続けている間マウス移動の処理をループさせる
     {
         MoveX := 0, MoveY := 0
-        MoveY += GetKeyState("I", "P") ? -11 : 0     ; 変換キーと一緒にIJKLが押されている間はカーソル座標を変化させ続ける
-        MoveX += GetKeyState("J", "P") ? -11 : 0
-        MoveY += GetKeyState("K", "P") ? 11 : 0
-        MoveX += GetKeyState("L", "P") ? 11 : 0
-        MoveX += GetKeyState(".", "P") ? 11 : 0
+        MoveY += GetKeyState("I", "P") ? -20 : 0     ; 変換キーと一緒にIJKLが押されている間はカーソル座標を変化させ続ける
+        MoveX += GetKeyState("J", "P") ? -20 : 0
+        MoveY += GetKeyState("K", "P") ? 20 : 0
+        MoveX += GetKeyState("L", "P") ? 20 : 0
+        MoveX += GetKeyState(".", "P") ? 20 : 0
         MoveX *= GetKeyState("LCtrl", "P") ? 10 : 1   ; Ctrlキーが押されている間は座標を10倍にし続ける(スピードアップ)
         MoveY *= GetKeyState("LCtrl", "P") ? 10 : 1
         MoveX *= GetKeyState("Shift", "P") ? 0.3 : 1 ; Shiftキーが押されている間は座標を30%にする（スピードダウン）
