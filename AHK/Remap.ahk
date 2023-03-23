@@ -136,13 +136,11 @@ Return
 
 ;F13＝英数切り替え(F13はUHK側で左親指に当てている)
 F13::
-  Send, {Esc}
   IME_SET(0)
   ;Send, {vk1C} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
   Return 
 ;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
 Pause::
-  Send, {Esc}
   IME_SET(1)
   ;Send, {vk1D} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
   Return
@@ -316,7 +314,6 @@ $vk1C::
     ; 変換を押している間に他のホットキーが発動した場合は入力しない
     ; 変換を長押ししていた場合も入力しない
     If (A_ThisHotkey == "$vk1C" and keyPressDuration < 200) {
-        Send, {Esc}
         IME_SET(1)
         Send,{vk1C}
     }
@@ -327,7 +324,6 @@ $vk1D::
     KeyWait, vk1D
     keyPressDuration := A_TickCount - startTime
     If (A_ThisHotkey == "$vk1D" and keyPressDuration < 200) {
-        Send, {Esc}
         IME_SET(0)
         Send,{vk1D}
     }
