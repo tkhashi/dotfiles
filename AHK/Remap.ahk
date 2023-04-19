@@ -221,43 +221,6 @@ Pause::
 #<^j::Send, #{left}
 #<^k::Send, #{right}
 
-; デュアルディスプレイ間マウス移動
-; 0 == プライマルディスプレイ
-; 1 == サブディスプレイ
-; [サブ｜メイン]の配置を想定
-a := 0
-;Win+tab
-#Tab::
-	if(a == 0){
-		CoordMode,Mouse,Screen
-		MouseGetPos,x,y
-		MouseMove,x - A_ScreenWidth,y
-    a := 1
-
-    ;SysGet, PrimaryMoniter, Moniter, 1
-    ;MouseMove, 
-	}
-	Else{
-		CoordMode,Mouse,Screen
-		MouseGetPos,x,y
-		MouseMove,x + A_ScreenWidth,y
-		a := 0
-	}
-return
-
-#1::
-  SysGet, MonitorCount, MonitorCount
-  SysGet, MonitorPrimary, MonitorPrimary
-  MsgBox, Monitor Count:`t%MonitorCount%`nPrimary Monitor:`t%MonitorPrimary%
-  Loop, %MonitorCount%
-  {
-    SysGet, MonitorName, MonitorName, %A_Index%
-    SysGet, Monitor, Monitor, %A_Index%
-    SysGet, MonitorWorkArea, MonitorWorkArea, %A_Index%
-    MsgBox, Monitor:`t#%A_Index%`nName:`t%MonitorName%`nLeft:`t%MonitorLeft% (%MonitorWorkAreaLeft% work)`nTop:`t%MonitorTop% (%MonitorWorkAreaTop% work)`nRight:`t%MonitorRight% (%MonitorWorkAreaRight% work)`nBottom:`t%MonitorBottom% (%MonitorWorkAreaBottom% work)
-  }
-
-
 ;///////////////////////////////アプリ起動///////////////////////////////////
 #HotkeyInterval 100
 #IfWinNotActive C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe
