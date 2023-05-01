@@ -37,8 +37,6 @@ IME_SET(SetSts, WinTitle="A") {
 ; チルダ(~)で元キーとしても認識する
 *~LCtrl::
 *~RCtrl::
-*~RShift::
-*~LShift::
 *~a::
 *~b::
 *~c::
@@ -224,20 +222,20 @@ Return
 #<^j::Send, #{left}
 #<^k::Send, #{right}
 
-;///////////////////////////////アプリ起動///////////////////////////////////
+; ///////////////////////////////アプリ起動///////////////////////////////////
 #HotkeyInterval 100
 #IfWinNotActive C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe
-  >^I::Send, ~#1 ; Vivaldi
-  >^0::Send, ~#2 ; Visual Studio
-  >^J::Send, ~#3 ; Terminal
-  ^!S::Send, ~#4 ; Slack
-  ^!L::Send, ~#5 ; VS Code
-  ^!E::Send, ~#6 ; Explorer
-  ^!F::Send, ~#7 ; Fork
+  >^I::Send, #1 ; Vivaldi
+  >^0::Send, #2 ; Visual Studio
+  >^J::Send, #3 ; Terminal
+  ^!S::Send, #4 ; Slack
+  ^!L::Send, #5 ; VS Code
+  ^!E::Send, #6 ; Explorer
+  ^!F::Send, #7 ; Fork
   +Space::Send, #8 ;ChatGPT
 
   ;AHK全部リロード
-^!R::
+  ; ^!R::
   Run, "C:\Users\Kazuhiro Takahashi\AppData\Local\Wox\Wox.exe"
   Sleep, 100
   Send, {Esc}
@@ -251,7 +249,7 @@ Return
   ;       日本語, 英語キーボードどちらでも使用可能
   ;       英語キーボードの場合、変換・無変換キーが存在するUS配列として扱えるAX配列を利用する
   ;   参考：
-  ;       https://www.atmarkit.co.jp/ait/articles/0001/26/news001.html
+  ; https://www.atmarkit.co.jp/ait/articles/0001/26/news001.html
   ;    Change Key使用：
   ;       日本語キーボードの場合
   ;           Caps Lock -> Ctrl
