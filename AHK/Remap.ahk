@@ -234,7 +234,7 @@ Return
   ^!L::Send, ~#5 ; VS Code
   ^!E::Send, ~#6 ; Explorer
   ^!F::Send, ~#7 ; Fork
-  +Space::Send, ~#8
+  +Space::Send, #8 ;ChatGPT
 
   ;AHK全部リロード
 ^!R::
