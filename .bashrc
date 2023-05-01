@@ -6,6 +6,7 @@ alias lsgr='ls -la | grep'
 # Directory
 alias wcd='cd ~/work/'
 alias scd='cd ~/work/smakan/'
+alias sccd='cd ~/work/screening.poc/'
 alias dcd='cd ~/work/dotfiles/'
 alias rcd='cd ~/work/smakan.module.report/'
 alias nvnv='nvim ~/work/dotfiles/nvim/'

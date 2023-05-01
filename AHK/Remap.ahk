@@ -8,20 +8,20 @@
 ;------------------------------------------------------------------------------------
 ;Esc時に英字入力にする
 ;------------------------------------------------------------------------------------
-IME_SET(SetSts, WinTitle="A")    {
-    ControlGet,hwnd,HWND,,,%WinTitle%
-    if  (WinActive(WinTitle))   {
-        ptrSize := !A_PtrSize ? 4 : A_PtrSize
-        VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-        NumPut(cbSize, stGTI,  0, "UInt")  ;   DWORD   cbSize;
-        hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-                 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-    }
-    return DllCall("SendMessage"
-          , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-          , UInt, 0x0283 ;Message : WM_IME_CONTROL
-          ,  Int, 0x006  ;wParam  : IMC_SETOPENSTATUS
-          ,  Int, SetSts) ;lParam  : 0 or 1
+IME_SET(SetSts, WinTitle="A") {
+  ControlGet,hwnd,HWND,,,%WinTitle%
+  if (WinActive(WinTitle)) {
+    ptrSize := !A_PtrSize ? 4 : A_PtrSize
+    VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
+    NumPut(cbSize, stGTI, 0, "UInt") ;   DWORD   cbSize;
+    hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
+    ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
+  }
+  return DllCall("SendMessage"
+  , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
+  , UInt, 0x0283 ;Message : WM_IME_CONTROL
+  , Int, 0x006 ;wParam  : IMC_SETOPENSTATUS
+  , Int, SetSts) ;lParam  : 0 or 1
 }
 
 ;~Esc::IME_SET(0)
@@ -34,8 +34,11 @@ IME_SET(SetSts, WinTitle="A")    {
 ; 主要なキーをホットキーとして検知可能にしておく
 ; A_ThisHotkey で検知可能にするための記述
 ; 検知だけしてAutoHotKey側では何も処理しない
+; チルダ(~)で元キーとしても認識する
 *~LCtrl::
 *~RCtrl::
+*~RShift::
+*~LShift::
 *~a::
 *~b::
 *~c::
@@ -102,11 +105,11 @@ IME_SET(SetSts, WinTitle="A")    {
 *~+::
 *~[::
 *~{::
-*~]::
+  *~]::
 *~}::
 *~\::
 *~|::
-*~;::
+  *~;::
 *~'::
 *~"::
 *~,::
@@ -115,11 +118,11 @@ IME_SET(SetSts, WinTitle="A")    {
 *~>::
 *~/::
 *~?::
-;*~Esc::
+  ;*~Esc::
 *~Tab::
 *~Space::
 *~LAlt::
-;*~RAlt::
+  ;*~RAlt::
 *~Left::
 *~Right::
 *~Up::
@@ -138,12 +141,12 @@ Return
 F13::
   IME_SET(0)
   ;Send, {vk1C} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
-  Return 
+Return 
 ;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
 Pause::
   IME_SET(1)
   ;Send, {vk1D} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
-  Return
+Return
 
 ;Ctrl + jknp => 矢印キー
 <^H::Send, {BS}
@@ -185,19 +188,19 @@ Pause::
 <^]::
   Send, {Esc}
   IME_SET(0)
-  Return
+Return
 <^[::
   Send, {Esc}
   IME_SET(0)
-  Return
+Return
 +<^[::
   Send, +{Esc}
   IME_SET(0)
-  Return
+Return
 +<^]::
   Send, +{Esc}
   IME_SET(0)
-  Return
+Return
 
 >^Q::Send, !{F4}
 ^4::Send, ^{F4}
@@ -208,11 +211,11 @@ Pause::
 <^@::
   Send, {Esc}
   IME_SET(0)
-  Return
+Return
 +<^@::
   Send, +{Esc}
   IME_SET(0)
-  Return
+Return
 <^vk1C::Send, {AppsKey}
 
 ;ウィンドウサイズ変更
@@ -224,73 +227,73 @@ Pause::
 ;///////////////////////////////アプリ起動///////////////////////////////////
 #HotkeyInterval 100
 #IfWinNotActive C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe
-#If
->^I::Send, #1 ; Vivaldi
->^0::Send, #2 ; Visual Studio
->^J::Send, #3 ; Terminal
-^!S::Send, #4 ; Slack
-^!L::Send, #5 ; VS Code
-^!E::Send, #6 ; Explorer
-^!F::Send, #7 ; Fork
+  >^I::Send, ~#1 ; Vivaldi
+  >^0::Send, ~#2 ; Visual Studio
+  >^J::Send, ~#3 ; Terminal
+  ^!S::Send, ~#4 ; Slack
+  ^!L::Send, ~#5 ; VS Code
+  ^!E::Send, ~#6 ; Explorer
+  ^!F::Send, ~#7 ; Fork
+  +Space::Send, ~#8
 
-;AHK全部リロード
+  ;AHK全部リロード
 ^!R::
-	Run, "C:\Users\Kazuhiro Takahashi\AppData\Local\Wox\Wox.exe"
-	Sleep, 100
-	Send, {Esc}
-	Run, "C:\Users\Kazuhiro Takahashi\work\ConfigDir\AHK\Remap.ahk"
-	Sleep, 50
-	Send, y
+  Run, "C:\Users\Kazuhiro Takahashi\AppData\Local\Wox\Wox.exe"
+  Sleep, 100
+  Send, {Esc}
+  Run, "C:\Users\Kazuhiro Takahashi\work\ConfigDir\AHK\Remap.ahk"
+  Sleep, 50
+  Send, y
 
-;///////////////////////////////マウス操作///////////////////////////////////
-;------------------------------------------------------------------------------
-;   前提：
-;       日本語, 英語キーボードどちらでも使用可能
-;       英語キーボードの場合、変換・無変換キーが存在するUS配列として扱えるAX配列を利用する
-;   参考：
-;       https://www.atmarkit.co.jp/ait/articles/0001/26/news001.html
-;    Change Key使用：
-;       日本語キーボードの場合
-;           Caps Lock -> Ctrl
-;       英語キーボードの場合
-;           Caps Lock -> Ctrl
-;           左Alt -> スキャンコード005A(AX配列における変換)
-;           右Alt -> スキャンコード005B(AX配列における無変換)
-;           Menuキー -> 左Alt
-;  参考：
-;    https://gist.github.com/kondei/87b5f783a6f84a653790
-;    http://pheromone.hatenablog.com/entry/20130603/1370276768
-;------------------------------------------------------------------------------
-;  はじめに 実行準備
-;------------------------------------------------------------------------------
+  ;///////////////////////////////マウス操作///////////////////////////////////
+  ;------------------------------------------------------------------------------
+  ;   前提：
+  ;       日本語, 英語キーボードどちらでも使用可能
+  ;       英語キーボードの場合、変換・無変換キーが存在するUS配列として扱えるAX配列を利用する
+  ;   参考：
+  ;       https://www.atmarkit.co.jp/ait/articles/0001/26/news001.html
+  ;    Change Key使用：
+  ;       日本語キーボードの場合
+  ;           Caps Lock -> Ctrl
+  ;       英語キーボードの場合
+  ;           Caps Lock -> Ctrl
+  ;           左Alt -> スキャンコード005A(AX配列における変換)
+  ;           右Alt -> スキャンコード005B(AX配列における無変換)
+  ;           Menuキー -> 左Alt
+  ;  参考：
+  ;    https://gist.github.com/kondei/87b5f783a6f84a653790
+  ;    http://pheromone.hatenablog.com/entry/20130603/1370276768
+  ;------------------------------------------------------------------------------
+  ;  はじめに 実行準備
+  ;------------------------------------------------------------------------------
 
-; キーリピートの早いキーボードだと警告が出るので設定
-#HotkeyInterval 100
+  ; キーリピートの早いキーボードだと警告が出るので設定
+  #HotkeyInterval 100
 
-; 変換を修飾キーとして扱うための準備
-; 変換を押し続けている限りリピートせず待機
-; vk1C == [変換キー]
+  ; 変換を修飾キーとして扱うための準備
+  ; 変換を押し続けている限りリピートせず待機
+  ; vk1C == [変換キー]
 $vk1C::
-    startTime := A_TickCount
-    KeyWait, vk1C
-    keyPressDuration := A_TickCount - startTime
-    ; 変換を押している間に他のホットキーが発動した場合は入力しない
-    ; 変換を長押ししていた場合も入力しない
-    If (A_ThisHotkey == "$vk1C" and keyPressDuration < 200) {
-        IME_SET(1)
-        Send,{vk1C}
-    }
-    Return
+  startTime := A_TickCount
+  KeyWait, vk1C
+  keyPressDuration := A_TickCount - startTime
+  ; 変換を押している間に他のホットキーが発動した場合は入力しない
+  ; 変換を長押ししていた場合も入力しない
+  If (A_ThisHotkey == "$vk1C" and keyPressDuration < 200) {
+    IME_SET(1)
+    Send,{vk1C}
+  }
+Return
 ; vk1D == [無変換キー]
 $vk1D::
-    startTime := A_TickCount
-    KeyWait, vk1D
-    keyPressDuration := A_TickCount - startTime
-    If (A_ThisHotkey == "$vk1D" and keyPressDuration < 200) {
-        IME_SET(0)
-        Send,{vk1D}
-    }
-    Return
+  startTime := A_TickCount
+  KeyWait, vk1D
+  keyPressDuration := A_TickCount - startTime
+  If (A_ThisHotkey == "$vk1D" and keyPressDuration < 200) {
+    IME_SET(0)
+    Send,{vk1D}
+  }
+Return
 
 ;------------------------------------------------------------------------------
 ;   第２弾 マウスカーソル
@@ -309,23 +312,23 @@ $vk1D::
 ~vk1C & K::
 ~vk1C & L::
 ~vk1C & .::
-    While (GetKeyState("vk1C", "P"))                 ; 変換キーが押され続けている間マウス移動の処理をループさせる
-    {
-        MoveX := 0, MoveY := 0
-        MoveY += GetKeyState("I", "P") ? -20 : 0     ; 変換キーと一緒にIJKLが押されている間はカーソル座標を変化させ続ける
-        MoveX += GetKeyState("J", "P") ? -20 : 0
-        MoveX += GetKeyState("J", "P") ? -20 : 0
-        MoveY += GetKeyState("K", "P") ? 20 : 0
-        MoveX += GetKeyState("L", "P") ? 20 : 0
-        MoveX += GetKeyState(".", "P") ? 20 : 0
-        MoveX *= GetKeyState("LCtrl", "P") ? 10 : 1   ; Ctrlキーが押されている間は座標を10倍にし続ける(スピードアップ)
-        MoveY *= GetKeyState("LCtrl", "P") ? 10 : 1
-        MoveX *= GetKeyState("Shift", "P") ? 0.3 : 1 ; Shiftキーが押されている間は座標を30%にする（スピードダウン）
-        MoveY *= GetKeyState("Shift", "P") ? 0.3 : 1
-        MouseMove, %MoveX%, %MoveY%, 0, R            ; マウスカーソルを移動する
-        Sleep, 0                                     ; 負荷が高い場合は設定を変更 設定できる値は-1、0、10～m秒 詳細はSleep
-    }
-    Return
+  While (GetKeyState("vk1C", "P")) ; 変換キーが押され続けている間マウス移動の処理をループさせる
+  {
+    MoveX := 0, MoveY := 0
+    MoveY += GetKeyState("I", "P") ? -20 : 0 ; 変換キーと一緒にIJKLが押されている間はカーソル座標を変化させ続ける
+    MoveX += GetKeyState("J", "P") ? -20 : 0
+    MoveX += GetKeyState("J", "P") ? -20 : 0
+    MoveY += GetKeyState("K", "P") ? 20 : 0
+    MoveX += GetKeyState("L", "P") ? 20 : 0
+    MoveX += GetKeyState(".", "P") ? 20 : 0
+    MoveX *= GetKeyState("LCtrl", "P") ? 10 : 1 ; Ctrlキーが押されている間は座標を10倍にし続ける(スピードアップ)
+    MoveY *= GetKeyState("LCtrl", "P") ? 10 : 1
+    MoveX *= GetKeyState("Shift", "P") ? 0.3 : 1 ; Shiftキーが押されている間は座標を30%にする（スピードダウン）
+    MoveY *= GetKeyState("Shift", "P") ? 0.3 : 1
+    MouseMove, %MoveX%, %MoveY%, 0, R ; マウスカーソルを移動する
+    Sleep, 0 ; 負荷が高い場合は設定を変更 設定できる値は-1、0、10～m秒 詳細はSleep
+  }
+Return
 
 ; 以下は日本語キーボード・英語キーボード向け
 ;変換＋F, Enter = 左クリック
@@ -345,14 +348,14 @@ vk1D & F Up::MouseClick,left,,,,,U
 
 ;英数変換 + D = Space + 左クリック
 vk1D & D::
-Send,{Space Down}
-MouseClick,left,,,,,D
-While(GetKeyState("D","P"))
-{
-  BlockInput, Send
-}
+  Send,{Space Down}
+  MouseClick,left,,,,,D
+  While(GetKeyState("D","P"))
+  {
+    BlockInput, Send
+  }
 Return
- vk1D & D Up::
+vk1D & D Up::
   Send, {Space Up}
   MouseClick,left,,,,,U
 Return
@@ -363,45 +366,45 @@ Return
 
 ; 変換 + P = スクロールアップ
 ~vk1C & P::
-Loop
-{
-Send {WheelUp}
-GetKeyState, T, Down
-If T=U ; U is a state for up, D is a state for down
-  Break
-}
+  Loop
+  {
+    Send {WheelUp}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
 Return
 
 ; 変換 + N = スクロールダウン
 ~vk1C & N::
-Loop
-{
-Send {WheelDown}
-GetKeyState, T, Down
-If T=U ; U is a state for up, D is a state for down
-  Break
-}
+  Loop
+  {
+    Send {WheelDown}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
 Return
 
 ; 変換 + H = スクロール左スライド
 ~vk1C & H::
-Loop
-{
-Send {WheelLeft}
-GetKeyState, T, Down
-If T=U ; U is a state for up, D is a state for down
-  Break
-}
+  Loop
+  {
+    Send {WheelLeft}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
 Return
 
 ; 変換 + ;(vkBB) = スクロール右スライド
 ~vk1C & vkBB::
-Loop
-{
-Send {WheelRight}
-GetKeyState, T, Down
-If T=U ; U is a state for up, D is a state for down
-  Break
-}
+  Loop
+  {
+    Send {WheelRight}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
 Return
 
