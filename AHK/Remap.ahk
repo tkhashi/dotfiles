@@ -135,17 +135,6 @@ IME_SET(SetSts, WinTitle="A") {
 
 Return
 
-;F13＝英数切り替え(F13はUHK側で左親指に当てている)
-F13::
-  IME_SET(0)
-  ;Send, {vk1C} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
-Return 
-;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
-Pause::
-  IME_SET(1)
-  ;Send, {vk1D} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
-Return
-
 ;Ctrl + jknp => 矢印キー
 <^H::Send, {BS}
 <^J::Send, {left}
@@ -233,15 +222,6 @@ Return
   ^!E::Send, #6 ; Explorer
   ^!F::Send, #7 ; Fork
   +Space::Send, #8 ;ChatGPT
-
-  ;AHK全部リロード
-  ; ^!R::
-  Run, "C:\Users\Kazuhiro Takahashi\AppData\Local\Wox\Wox.exe"
-  Sleep, 100
-  Send, {Esc}
-  Run, "C:\Users\Kazuhiro Takahashi\work\ConfigDir\AHK\Remap.ahk"
-  Sleep, 50
-  Send, y
 
   ;///////////////////////////////マウス操作///////////////////////////////////
   ;------------------------------------------------------------------------------
