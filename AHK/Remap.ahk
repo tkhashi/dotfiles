@@ -212,6 +212,18 @@
   #<^j::Send, #{left}
   #<^k::Send, #{right}
 
+; ///////////////////////////////アプリ起動///////////////////////////////////
+#HotkeyInterval 100
+#IfWinNotActive C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe
+  >^I::Send, #1 ; Vivaldi
+  >^0::Send, #2 ; Visual Studio
+  >^J::Send, #3 ; Terminal
+  ^!S::Send, #4 ; Slack
+  ^!L::Send, #5 ; VS Code
+  ^!E::Send, #6 ; Explorer
+  ^!F::Send, #7 ; Fork
+  +Space::Send, #8 ;ChatGPT
+
   ;///////////////////////////////マウス操作///////////////////////////////////
   ;------------------------------------------------------------------------------
   ;   前提：
