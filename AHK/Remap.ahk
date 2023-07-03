@@ -136,6 +136,17 @@
 
   Return
 
+  ;F13＝英数切り替え(F13はUHK側で左親指に当てている)
+  F13::
+    IME_SET(0)
+    ;Send, {vk1C} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
+  Return 
+  ;ひらがな/カタカナ切り替え（PauseはUHK側で右親指に当てている）
+  F14::
+    IME_SET(1)
+    ;Send, {vk1D} ;TODO: UHKで動作確認 UHK側から直接vk1D送れるならUHK側を変更
+  Return
+
   ;Ctrl + jknp => 矢印キー
   <^H::Send, {BS}
   <^J::Send, {left}
@@ -212,46 +223,46 @@
   #<^j::Send, #{left}
   #<^k::Send, #{right}
 
-; ///////////////////////////////アプリ起動///////////////////////////////////
-#HotkeyInterval 100
-#IfWinNotActive C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe
-  >^I::Send, #1 ; Vivaldi
-  >^0::Send, #2 ; Visual Studio
-  >^J::Send, #3 ; Terminal
-  ^!S::Send, #4 ; Slack
-  ^!L::Send, #5 ; VS Code
-  ^!E::Send, #6 ; Explorer
-  ^!F::Send, #7 ; Fork
-  +Space::Send, #8 ;ChatGPT
-
-  ;///////////////////////////////マウス操作///////////////////////////////////
-  ;------------------------------------------------------------------------------
-  ;   前提：
-  ;       日本語, 英語キーボードどちらでも使用可能
-  ;       英語キーボードの場合、変換・無変換キーが存在するUS配列として扱えるAX配列を利用する
-  ;   参考：
-  ; https://www.atmarkit.co.jp/ait/articles/0001/26/news001.html
-  ;    Change Key使用：
-  ;       日本語キーボードの場合
-  ;           Caps Lock -> Ctrl
-  ;       英語キーボードの場合
-  ;           Caps Lock -> Ctrl
-  ;           左Alt -> スキャンコード005A(AX配列における変換)
-  ;           右Alt -> スキャンコード005B(AX配列における無変換)
-  ;           Menuキー -> 左Alt
-  ;  参考：
-  ;    https://gist.github.com/kondei/87b5f783a6f84a653790
-  ;    http://pheromone.hatenablog.com/entry/20130603/1370276768
-  ;------------------------------------------------------------------------------
-  ;  はじめに 実行準備
-  ;------------------------------------------------------------------------------
-
-  ; キーリピートの早いキーボードだと警告が出るので設定
+  ; ///////////////////////////////アプリ起動///////////////////////////////////
   #HotkeyInterval 100
+  #IfWinNotActive C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe
+    >^I::Send, #1 ; Vivaldi
+    >^0::Send, #2 ; Visual Studio
+    >^J::Send, #3 ; Terminal
+    ^!S::Send, #4 ; Slack
+    ^!L::Send, #5 ; VS Code
+    ^!E::Send, #6 ; Explorer
+    ^!F::Send, #7 ; Fork
+    ^Space::Send, #8 ;ChatGPT
 
-  ; 変換を修飾キーとして扱うための準備
-  ; 変換を押し続けている限りリピートせず待機
-  ; vk1C == [変換キー]
+    ;///////////////////////////////マウス操作///////////////////////////////////
+    ;------------------------------------------------------------------------------
+    ;   前提：
+    ;       日本語, 英語キーボードどちらでも使用可能
+    ;       英語キーボードの場合、変換・無変換キーが存在するUS配列として扱えるAX配列を利用する
+    ;   参考：
+    ; https://www.atmarkit.co.jp/ait/articles/0001/26/news001.html
+    ;    Change Key使用：
+    ;       日本語キーボードの場合
+    ;           Caps Lock -> Ctrl
+    ;       英語キーボードの場合
+    ;           Caps Lock -> Ctrl
+    ;           左Alt -> スキャンコード005A(AX配列における変換)
+    ;           右Alt -> スキャンコード005B(AX配列における無変換)
+    ;           Menuキー -> 左Alt
+    ;  参考：
+    ;    https://gist.github.com/kondei/87b5f783a6f84a653790
+    ;    http://pheromone.hatenablog.com/entry/20130603/1370276768
+    ;------------------------------------------------------------------------------
+    ;  はじめに 実行準備
+    ;------------------------------------------------------------------------------
+
+    ; キーリピートの早いキーボードだと警告が出るので設定
+    #HotkeyInterval 100
+
+    ; 変換を修飾キーとして扱うための準備
+    ; 変換を押し続けている限りリピートせず待機
+    ; vk1C == [変換キー]
   $vk1C::
     startTime := A_TickCount
     KeyWait, vk1C
