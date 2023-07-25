@@ -40,17 +40,16 @@ alias sm='git switch SMKN2-'
 
 #GCP
 alias fss='npx firebase emulators:start'
-alias fssa='npx firebase emulators:start --import ../../Desktop/202209_atsugi_new'
+alias fssa='npx firebase emulators:start --import ../../OneDrive/デスクトップ/202209_atsugi_new/'
 
 # Application
 alias chrome='/c/Program\ Files/Google/Chrome/Application/chrome.exe'
 alias n='nvim'
 alias nv='neovide'
 export LANG=ja_JP.UTF-8
-eval "$(oh-my-posh init bash --config ~/jandedobbeleer.omp.json)"
+# eval "$(oh-my-posh init bash --config ~/jandedobbeleer.omp.json)"
 # eval "$(starship init bash)"
-eval "$(zoxide init bash)"
+# eval "$(zoxide init bash)"
 
 # completion
-source <(jira completion bash)
 source <(glab completion -s bash)
