@@ -14,7 +14,6 @@ alias nvnv='nvim ~/work/dotfiles/nvim/'
 # Git
 alias g='git'
 alias ga='git add .'
-# alias gcm='git commit -m'
 gcm (){
   git commit -m "$1 $2 $3 $4 $5 $6 $7 $8 $9"
 }
@@ -30,6 +29,31 @@ alias gf='git fetch'
 alias gl='git log'
 alias gpl='git pull'
 alias gp='git push'
+alias gpu='current_branch=$(git branch --show-current); git push --set-upstream origin $current_branch'
+gi (){
+    # カレントディレクトリに".gitignore"が存在するかチェック
+    if [ -e .gitignore ]; then
+        echo "Already exist .gitignore. Current content of .gitignore:"
+        echo ""
+        echo "==============================================================="
+        cat .gitignore
+        echo "==============================================================="
+        echo ""
+
+        read -p "Append  to .gitignore? (y/n): " answer
+        if [ "$answer" == "y" ]; then
+            # "git ignore"コマンドの出力結果をファイルに追記
+            git ignore "$1, $2, $3, $4, $5" >> .gitignore
+            echo "Appended  to .gitignore"
+        else
+            echo "Operation canceled"
+        fi
+    else
+        touch .gitignore
+        git ignore "$1, $2, $3, $4, $5" >> .gitignore
+        echo "Created .gitignore"
+    fi
+}
 
 # GITLAB
 alias gltl='glab mr list | grep $(git rev-parse --abbrev-ref HEAD)'
@@ -53,3 +77,5 @@ export LANG=ja_JP.UTF-8
 
 # completion
 source <(glab completion -s bash)
+
+[ -f ~/.inshellisense/key-bindings.bash ] && source ~/.inshellisense/key-bindings.bash
