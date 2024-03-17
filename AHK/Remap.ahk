@@ -318,82 +318,82 @@
 ;    }
 ;  Return
 ;
-;  ; 以下は日本語キーボード・英語キーボード向け
-;  ;変換＋F, Enter = 左クリック
-;  ~vk1C & Enter::MouseClick,left,,,,,D
-;  ~vk1C & Enter Up::MouseClick,left,,,,,U
-;  ~vk1C & F::MouseClick,left,,,,,D
-;  ~vk1C & F Up::MouseClick,left,,,,,U
-;
-;  ; 英数変換||変換 + Enter|F = 左クリック（押し続けるとドラッグ）
-;  vk1D & F::
-;    MouseClick,left,,,,,D
-;    While(GetKeyState("F","P"))
-;    {
-;    }
-;  Return
-;  vk1D & F Up::MouseClick,left,,,,,U
-;
-;  ;英数変換 + D = Space + 左クリック
-;  vk1D & D::
-;    Send,{Space Down}
-;    MouseClick,left,,,,,D
-;    While(GetKeyState("D","P"))
-;    {
-;      BlockInput, Send
-;    }
-;  Return
-;  vk1D & D Up::
-;    Send, {Space Up}
-;    MouseClick,left,,,,,U
-;  Return
-;
-;  ; 英数変換||変換 + S = 右クリック
-;  ~vk1C & S::MouseClick,right
-;  ~vk1D & S::MouseClick,right
-;
-;  ; 変換 + P = スクロールアップ
-;  ~vk1C & P::
-;    Loop
-;    {
-;      Send {WheelUp}
-;      GetKeyState, T, Down
-;      If T=U ; U is a state for up, D is a state for down
-;        Break
-;    }
-;  Return
-;
-;  ; 変換 + N = スクロールダウン
-;  ~vk1C & N::
-;    Loop
-;    {
-;      Send {WheelDown}
-;      GetKeyState, T, Down
-;      If T=U ; U is a state for up, D is a state for down
-;        Break
-;    }
-;  Return
-;
-;  ; 変換 + H = スクロール左スライド
-;  ~vk1C & H::
-;    Loop
-;    {
-;      Send {WheelLeft}
-;      GetKeyState, T, Down
-;      If T=U ; U is a state for up, D is a state for down
-;        Break
-;    }
-;  Return
-;
-;  ; 変換 + ;(vkBB) = スクロール右スライド
-;  ~vk1C & vkBB::
-;    Loop
-;    {
-;      Send {WheelRight}
-;      GetKeyState, T, Down
-;      If T=U ; U is a state for up, D is a state for down
-;        Break
-;    }
-;  Return
-;
-;
+
+; 以下は日本語キーボード・英語キーボード向け
+;変換＋F, Enter = 左クリック
+~vk1C & Enter::MouseClick,left,,,,,D
+~vk1C & Enter Up::MouseClick,left,,,,,U
+~vk1C & F::MouseClick,left,,,,,D
+~vk1C & F Up::MouseClick,left,,,,,U
+
+; 英数変換||変換 + Enter|F = 左クリック（押し続けるとドラッグ）
+vk1D & F::
+  MouseClick,left,,,,,D
+  While(GetKeyState("F","P"))
+  {
+  }
+Return
+vk1D & F Up::MouseClick,left,,,,,U
+
+;英数変換 + D = Space + 左クリック
+vk1D & D::
+  Send,{Space Down}
+  MouseClick,left,,,,,D
+  While(GetKeyState("D","P"))
+  {
+    BlockInput, Send
+  }
+Return
+vk1D & D Up::
+  Send, {Space Up}
+  MouseClick,left,,,,,U
+Return
+
+; 英数変換||変換 + S = 右クリック
+~vk1C & S::MouseClick,right
+~vk1D & S::MouseClick,right
+
+; 変換 + P = スクロールアップ
+~vk1C & P::
+  Loop
+  {
+    Send {WheelUp}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
+Return
+
+; 変換 + N = スクロールダウン
+~vk1C & N::
+  Loop
+  {
+    Send {WheelDown}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
+Return
+
+; 変換 + H = スクロール左スライド
+~vk1C & H::
+  Loop
+  {
+    Send {WheelLeft}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
+Return
+
+; 変換 + ;(vkBB) = スクロール右スライド
+~vk1C & vkBB::
+  Loop
+  {
+    Send {WheelRight}
+    GetKeyState, T, Down
+    If T=U ; U is a state for up, D is a state for down
+      Break
+  }
+Return
+
