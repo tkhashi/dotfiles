@@ -28,12 +28,17 @@ require('packer').startup(function(use)
     },
   }
 
-  use { -- Highlight, edit, and navigate code
+  use {
     'nvim-treesitter/nvim-treesitter',
-    run = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
+    run = ':TSUpdate'
   }
+
+  --use { -- Highlight, edit, and navigate code
+  --  'nvim-treesitter/nvim-treesitter',
+  --  run = function()
+  --    pcall(require('nvim-treesitter.install').update { with_sync = true })
+  --  end,
+  --}
 
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -66,6 +71,9 @@ require('packer').startup(function(use)
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
   use 'alaviss/nim.nvim'
+
+-- Firenvim for chrome extension
+  use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
