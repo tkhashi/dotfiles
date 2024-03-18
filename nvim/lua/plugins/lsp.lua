@@ -1,4 +1,5 @@
 local diagnostic = require "vim.diagnostic"
+local lua_ls     = require "lspconfig.server_configurations.lua_ls"
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -56,7 +57,7 @@ local servers = {
   tsserver = {},
   jsonls = {},
 
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       diagnostic = { globals = 'vim' },
       workspace = { checkThirdParty = false },
