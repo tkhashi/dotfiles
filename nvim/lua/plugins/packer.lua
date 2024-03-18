@@ -10,7 +10,11 @@ end
 require('packer').startup(function(use)
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip'
+    },
   }
 
   use { -- LSP Configuration & Plugins
@@ -36,24 +40,15 @@ require('packer').startup(function(use)
       end,
   }
 
-  --use { -- Highlight, edit, and navigate code
-  --  'nvim-treesitter/nvim-treesitter',
-  --  run = function()
-  --    pcall(require('nvim-treesitter.install').update { with_sync = true })
-  --  end,
-  --}
-
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
 
-  -- Git related plugins
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-rhubarb'
-
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-  use "folke/neodev.nvim"
+  use {
+    "folke/neodev.nvim",
+  }
   use {
     'nvim-lualine/lualine.nvim', -- Fancier statusline
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -67,15 +62,7 @@ require('packer').startup(function(use)
   }
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
 
-  -- Fuzzy Finder (files, lsp, etc)
-  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
-
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-
-  use 'alaviss/nim.nvim'
-
--- Firenvim for chrome extension
+  -- Firenvim for chrome extension
   use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
