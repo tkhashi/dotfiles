@@ -25,10 +25,41 @@
     , Int, SetSts) ;lParam  : 0 or 1
   }
 
-  ;~Esc::IME_SET(0)
-  ;~^[::IME_SET(0)
-  ;~^'::IME_SET(0)
-  ;~^@::IME_SET(0)
+  ;-----------------------------------------------------------
+  ; IMEの状態の取得
+  ;   WinTitle="A"    対象Window
+  ;   戻り値          1:ON / 0:OFF
+  ;-----------------------------------------------------------
+  IME_GET(WinTitle="A")  {
+      ControlGet,hwnd,HWND,,,%WinTitle%
+      if  (WinActive(WinTitle))   {
+          ptrSize := !A_PtrSize ? 4 : A_PtrSize
+          VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
+          NumPut(cbSize, stGTI,  0, "UInt")  ;   DWORD   cbSize;
+          hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
+                   ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
+      }
+
+      return DllCall("SendMessage"
+            , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
+            , UInt, 0x0283 ;Message : WM_IME_CONTROL
+            ,  Int, 0x0005 ;wParam  : IMC_GETOPENSTATUS
+            ,  Int, 0)     ;lParam  : 0
+  }
+
+  ; LShift連打でIME FF
+  ~LShift::
+    If(A_PriorHotkey = A_ThisHotkey) And (A_TimeSincePriorHotkey < 300){
+      IME_SET(0) 
+    }
+    return
+
+  ; RShift連打でIME ON
+  ~RShift::
+    If(A_PriorHotkey = A_ThisHotkey) And (A_TimeSincePriorHotkey < 300){
+      IME_SET(1)
+    }
+    return
 
   ;///////////////////////////////エディターリマップ///////////////////////////////////
   #HotkeyInterval 100
