@@ -65,6 +65,15 @@ require('packer').startup(function(use)
   -- Firenvim for chrome extension
   use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
 
+  use({
+      "kylechui/nvim-surround",
+      tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+      config = function()
+          require("nvim-surround").setup({
+              -- Configuration here, or leave empty to use defaults
+          })
+      end
+  })
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then

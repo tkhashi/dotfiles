@@ -4,7 +4,7 @@
 vim.o.hlsearch = true -- Set highlight on search
 vim.wo.number = true -- Make line numbers default
 vim.o.mouse = 'a' -- Enable mouse mode
-vim.o.clipboard = vim.o.clipboard .. 'unnamedplus' -- Share OS clipboard
+vim.o.clipboard = 'unnamedplus' -- Share OS clipboard
 vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
 vim.o.ignorecase = true -- Case insensitive searching UNLESS /C or capital in search
