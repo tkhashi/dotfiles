@@ -78,3 +78,6 @@ eval "$(oh-my-posh init bash --config ~/jandedobbeleer.omp.json)"
 source <(glab completion -s bash)
 
 [ -f ~/.inshellisense/key-bindings.bash ] && source ~/.inshellisense/key-bindings.bash
+
+# Option
+alias memo='cd ~/work/memo'
