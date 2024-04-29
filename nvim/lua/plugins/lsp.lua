@@ -53,7 +53,6 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  nimls = {},
   tsserver = {},
   jsonls = {},
 

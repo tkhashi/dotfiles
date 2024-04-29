@@ -45,13 +45,26 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use {
-    "folke/neodev.nvim",
+    'navarasu/onedark.nvim', -- Theme inspired by Atom
+    require('onedark').setup {
+      style = 'cool'
+    },
+    require('onedark').load();
+      use {
+        "folke/neodev.nvim",
+      }
   }
+
   use {
     'nvim-lualine/lualine.nvim', -- Fancier statusline
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = {
+      'kyazdani42/nvim-web-devicons',
+      opt = true,
+      options = {
+        theme = custom_catppuccin,
+      }
+    }
   }
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use {

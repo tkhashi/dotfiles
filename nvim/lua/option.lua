@@ -12,6 +12,6 @@ vim.o.smartcase = true
 vim.o.updatetime = 250 -- Decrease update time
 vim.wo.signcolumn = 'yes'
 vim.o.termguicolors = true -- Set colorscheme
-vim.cmd [[colorscheme onedark]]
+--vim.cmd [[colorscheme onedark]]
 vim.o.completeopt = 'menuone,noselect' -- Set completeopt to have a better completion experience
 
