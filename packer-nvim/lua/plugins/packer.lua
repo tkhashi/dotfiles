@@ -67,12 +67,14 @@ require('packer').startup(function(use)
     }
   }
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
+
   use {
-    'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
-    config = function()
-      require('Comment').setup()
-    end
+   'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+   config = function()
+     require('Comment').setup()
+   end
   }
+
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
 
   -- Firenvim for chrome extension
@@ -87,6 +89,14 @@ require('packer').startup(function(use)
           })
       end
   })
+
+  use ({
+    "soulis-1256/eagle.nvim",
+    config = function()
+      vim.o.mousemoveevent = true
+    end
+  })
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
