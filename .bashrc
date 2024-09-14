@@ -79,5 +79,8 @@ source <(glab completion -s bash)
 
 [ -f ~/.inshellisense/key-bindings.bash ] && source ~/.inshellisense/key-bindings.bash
 
+# pyenv
+eval "$(pyenv init -)"
+
 # Option
 alias memo='cd ~/work/memo'

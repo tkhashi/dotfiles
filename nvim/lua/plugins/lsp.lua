@@ -50,7 +50,7 @@ end -- Enable the following language servers Feel free to add/remove any LSPs th
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+  gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
   tsserver = {},
