@@ -1,5 +1,5 @@
 return {
-  { "neanias/everforest-nvim", "shaunsingh/nord.nvim" },
+  { "neanias/everforest-nvim" },
   {
     "LazyVim/LazyVim",
     opts = {

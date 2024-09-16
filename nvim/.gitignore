@@ -8,5 +8,5 @@ foo.*
 data
 
 # Config files that represent local settings
-/lazyvim.json
-/lazy-lock.json
+lazyvim.json
+lazy-lock.json
