@@ -6,3 +6,7 @@ debug
 foo.*
 *.log
 data
+
+# Config files that represent local settings
+/lazyvim.json
+/lazy-lock.json
