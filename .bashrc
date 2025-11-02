@@ -84,3 +84,6 @@ eval "$(pyenv init -)"
 
 # Option
 alias memo='cd ~/work/memo'
+. "$HOME/.cargo/env"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"
