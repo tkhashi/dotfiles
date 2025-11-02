@@ -1,0 +1,53 @@
+
+.explorer-folders-view [aria-level]::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.explorer-folders-view [aria-level][aria-expanded="true"] .monaco-tl-row::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    border-top-left-radius: 8px;
+    top: 4px;
+    height: calc(100% - 4px);
+}
+.explorer-folders-view [aria-level="1"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px); }.explorer-folders-view [aria-level="1"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px); }.explorer-folders-view [aria-level="1"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 22px;
+            width: calc(100% - 22px);
+            background: hsla(161, 65%, 65.2%, 0.30000000000000004);
+        }.explorer-folders-view [aria-level="2"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px); }.explorer-folders-view [aria-level="2"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px); }.explorer-folders-view [aria-level="2"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 30px;
+            width: calc(100% - 30px);
+            background: hsla(60, 65%, 65.2%, 0.30000000000000004);
+        }.explorer-folders-view [aria-level="3"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px); }.explorer-folders-view [aria-level="3"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px); }.explorer-folders-view [aria-level="3"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 38px;
+            width: calc(100% - 38px);
+            background: hsla(11, 65%, 65.2%, 0.30000000000000004);
+        }.explorer-folders-view [aria-level="4"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px); }.explorer-folders-view [aria-level="4"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px); }.explorer-folders-view [aria-level="4"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 46px;
+            width: calc(100% - 46px);
+            background: hsla(291, 71.3%, 65.2%, 0.30000000000000004);
+        }.explorer-folders-view [aria-level="5"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px); }.explorer-folders-view [aria-level="5"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px); }.explorer-folders-view [aria-level="5"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 54px;
+            width: calc(100% - 54px);
+            background: hsla(200, 76.9%, 65.2%, 0.30000000000000004);
+        }.explorer-folders-view [aria-level="6"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px, transparent 58px, hsla(200, 76.9%, 65.2%, 0.1) 58px, hsla(200, 76.9%, 65.2%, 0.1) 60px, transparent 60px); }.explorer-folders-view [aria-level="6"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px, transparent 58px, hsla(200, 76.9%, 65.2%, 0.1) 58px, hsla(200, 76.9%, 65.2%, 0.1) 60px, transparent 60px); }.explorer-folders-view [aria-level="6"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 62px;
+            width: calc(100% - 62px);
+            background: hsla(161, 65%, 65.2%, 0.30000000000000004);
+        }.explorer-folders-view [aria-level="7"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px, transparent 58px, hsla(200, 76.9%, 65.2%, 0.1) 58px, hsla(200, 76.9%, 65.2%, 0.1) 60px, transparent 60px, transparent 66px, hsla(161, 65%, 65.2%, 0.1) 66px, hsla(161, 65%, 65.2%, 0.1) 68px, transparent 68px); }.explorer-folders-view [aria-level="7"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px, transparent 58px, hsla(200, 76.9%, 65.2%, 0.1) 58px, hsla(200, 76.9%, 65.2%, 0.1) 60px, transparent 60px, transparent 66px, hsla(161, 65%, 65.2%, 0.1) 66px, hsla(161, 65%, 65.2%, 0.1) 68px, transparent 68px); }.explorer-folders-view [aria-level="7"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 70px;
+            width: calc(100% - 70px);
+            background: hsla(60, 65%, 65.2%, 0.30000000000000004);
+        }.explorer-folders-view [aria-level="8"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px, transparent 58px, hsla(200, 76.9%, 65.2%, 0.1) 58px, hsla(200, 76.9%, 65.2%, 0.1) 60px, transparent 60px, transparent 66px, hsla(161, 65%, 65.2%, 0.1) 66px, hsla(161, 65%, 65.2%, 0.1) 68px, transparent 68px, transparent 74px, hsla(60, 65%, 65.2%, 0.1) 74px, hsla(60, 65%, 65.2%, 0.1) 76px, transparent 76px); }.explorer-folders-view [aria-level="8"][aria-expanded="true"]::before { background: linear-gradient(90deg, transparent 20px, transparent 20px, transparent 26px, hsla(161, 65%, 65.2%, 0.1) 26px, hsla(161, 65%, 65.2%, 0.1) 28px, transparent 28px, transparent 34px, hsla(60, 65%, 65.2%, 0.1) 34px, hsla(60, 65%, 65.2%, 0.1) 36px, transparent 36px, transparent 42px, hsla(11, 65%, 65.2%, 0.1) 42px, hsla(11, 65%, 65.2%, 0.1) 44px, transparent 44px, transparent 50px, hsla(291, 71.3%, 65.2%, 0.1) 50px, hsla(291, 71.3%, 65.2%, 0.1) 52px, transparent 52px, transparent 58px, hsla(200, 76.9%, 65.2%, 0.1) 58px, hsla(200, 76.9%, 65.2%, 0.1) 60px, transparent 60px, transparent 66px, hsla(161, 65%, 65.2%, 0.1) 66px, hsla(161, 65%, 65.2%, 0.1) 68px, transparent 68px, transparent 74px, hsla(60, 65%, 65.2%, 0.1) 74px, hsla(60, 65%, 65.2%, 0.1) 76px, transparent 76px); }.explorer-folders-view [aria-level="8"][aria-expanded="true"] .monaco-tl-row::before {
+            left: 78px;
+            width: calc(100% - 78px);
+            background: transparent;
+        }
