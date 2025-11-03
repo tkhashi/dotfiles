@@ -1,6 +1,8 @@
 -- triggers/path.lua
 -- 自動リロード機能
 
+-- luacheck: globals hs
+
 local log = hs.logger.new("path", "info")
 
 -- ファイル変更時の処理

@@ -1,6 +1,8 @@
 -- commands/input.lua
 -- IME表示・Karabinerプロファイル関連のコマンド
 
+-- luacheck: globals hs
+
 local M = {}
 local mediator = require("core.mediator")
 local karabiner = require("repositories.karabiner")

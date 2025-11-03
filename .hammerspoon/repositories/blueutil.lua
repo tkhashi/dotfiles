@@ -1,6 +1,8 @@
 -- repositories/blueutil.lua
 -- blueutil CLI操作の薄いラッパー
 
+-- luacheck: globals hs
+
 local M = {}
 local shell = require("repositories.shell")
 local log = hs.logger.new("blueutil", "info")

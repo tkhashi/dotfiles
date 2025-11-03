@@ -1,6 +1,8 @@
 -- triggers/watchers/power.lua
 -- 電源復帰時のトリガー
 
+-- luacheck: globals hs wakeWatcher
+
 local mediator = require("core.mediator")
 local log = hs.logger.new("power", "info")
 

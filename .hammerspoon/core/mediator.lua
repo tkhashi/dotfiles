@@ -2,6 +2,8 @@
 -- Mediator パターンによる司令塔
 -- コマンドの登録、ディスパッチ、エラーハンドリングを担当
 
+-- luacheck: globals hs
+
 local M = {
   handlers = {},
   log = hs.logger.new("mediator", "info")

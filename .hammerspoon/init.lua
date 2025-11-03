@@ -1,8 +1,10 @@
 ------------------------------------------------------------
--- Hammerspoon init.lua (New Architecture)
+-- Hammerspoon init.lua 
 -- リアーキテクティング済み: Mediator + Triggers + Repositories
 -- ARCHITECTURE.md に従った構造化設計
 ------------------------------------------------------------
+
+-- luacheck: globals hs
 
 -- 💡 新アーキテクチャのinit.luaの役割：
 -- 1. コマンド群の register() を列挙（何ができるか一覧）
@@ -43,7 +45,7 @@ hs.keycodes.inputSourceChanged(function()
 end)
 
 -- 起動完了メッセージ
-hs.alert.show("Hammerspoon ready (New Architecture)", 1.0)
+hs.alert.show("Hammerspoon ready", 1.0)
 
 -- 起動時のプロファイル整合（既存機能の維持）
 hs.timer.doAfter(1.0, function()

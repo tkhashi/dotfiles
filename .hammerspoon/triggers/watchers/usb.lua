@@ -1,6 +1,8 @@
 -- triggers/watchers/usb.lua
 -- USB監視トリガー
 
+-- luacheck: globals hs usbWatcher
+
 local mediator = require("core.mediator")
 local log = hs.logger.new("usb", "info")
 

@@ -1,6 +1,8 @@
 -- core/log.lua
 -- ログ設定とユーティリティ
 
+-- luacheck: globals hs
+
 local M = {}
 
 -- カテゴリ別ログレベル設定

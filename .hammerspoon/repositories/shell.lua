@@ -1,6 +1,8 @@
 -- repositories/shell.lua
 -- 汎用シェルコマンド実行の薄いラッパー
 
+-- luacheck: globals hs
+
 local M = {}
 local log = hs.logger.new("shell", "info")
 
