@@ -1,7 +1,7 @@
 ------------------------------------------------------------
 -- Hammerspoon init.lua 
 -- リアーキテクティング済み: Mediator + Triggers + Repositories
--- ARCHITECTURE.md に従った構造化設計
+-- 詳細なアーキテクチャについては ARCHITECTURE.md を参照
 ------------------------------------------------------------
 
 -- luacheck: globals hs
@@ -25,7 +25,7 @@ require("commands.input").register()
 -- 自動リロード（.luaファイル変更監視）
 require("triggers.path")
 
--- 手動ホットキー（Ctrl+Alt+Cmd+R/W）
+-- 手動ホットキー（Ctrl+Alt+Cmd+R: リロード + プロファイル整合）
 require("triggers.hotkey")
 
 -- USB監視（Naya Create Left 接続/切断）

@@ -1,164 +1,281 @@
 # Hammerspoon Configuration
 
-このリポジトリはHammerspoonの設定ファイルです。構造化アーキテクチャに基づく保守性・拡張性の高い設計を採用しています。
-
-## 🏗️ アーキテクチャ概要
-
-### 設計原則
-
-- **Mediator パターン**: 中央司令塔による一元管理
-- **Command パターン**: `領域.動詞` 形式でのコマンド定義
-- **Repository パターン**: 外部CLI(blueutil/karabiner_cli)の薄いラッパー
-- **Trigger 分離**: イベント起点とビジネスロジックの分離
-
-### ディレクトリ構成
-
-```
-~/.hammerspoon/
-├─ init.lua                  # エントリーポイント：登録と起動のみ
-├─ core/
-│  ├─ mediator.lua           # 司令塔（register/dispatch + エラーハンドリング）
-│  └─ log.lua                # ログ設定とユーティリティ
-├─ commands/
-│  └─ input.lua              # IME表示/Karabiner関連のコマンド
-├─ triggers/
-│  ├─ path.lua               # 自動リロード
-│  ├─ hotkey.lua             # 手動ホットキー
-│  └─ watchers/
-│     ├─ usb.lua             # USB監視
-│     └─ power.lua           # 復帰時処理
-└─ repositories/
-   ├─ shell.lua              # 汎用シェル操作
-   ├─ blueutil.lua           # Bluetooth操作
-   └─ karabiner.lua          # Karabiner CLI操作
-```
+このリポジトリは構造化アーキテクチャに基づくHammerspoon設定です。保守性・拡張性を重視した設計で、簡単にカスタマイズできます。
 
 ## 🚀 機能
 
 ### IME（日本語入力）サポート
 - **リアルタイム表示**: IME切替時にアラート表示（「あ」「A」）
 - **メニューバー表示**: 現在のIME状態をメニューバーに表示
-- **スタイル調整**: カスタマイズ可能なアラートスタイル
 
 ### Karabiner-Elements 自動プロファイル切替
-- **USB接続**: Naya Create Left キーボード接続/切断を自動検知
-- **Bluetooth**: Naya Create キーボードのBluetooth接続状態を監視
-- **優先順位**: UHK > Naya(USB) > Naya(BT) > Laptop の順で自動選択
+- **USB/Bluetooth監視**: キーボード接続状態を自動検知
+- **優先順位制御**: UHK > Naya(USB) > Naya(BT) > Laptop の順で自動選択
 - **復帰時対応**: スリープ復帰・画面アンロック時に自動で状態確認・切替
 
 ### 自動リロード
 - **ファイル監視**: `.lua`ファイルの変更を検知して自動リロード
-- **手動リロード**: `Ctrl+Alt+Cmd+R` でいつでも手動リロード可能
 
 ## ⌨️ ホットキー
 
 | キー | 機能 |
 |------|------|
-| `Ctrl+Alt+Cmd+R` | 手動リロード |
-| `Ctrl+Alt+Cmd+W` | 手動プロファイル整合実行 |
+| `Ctrl+Alt+Cmd+R` | 手動リロード + プロファイル整合実行 |
 
-## 📋 利用可能なコマンド
+## ⚙️ 設定・カスタマイズ
 
-新しいアーキテクチャでは、全ての機能がコマンドとして登録されています：
+### 依存関係のインストール
 
-```lua
--- IME表示
-mediator.dispatch("input.ime.flash")
+```bash
+# Bluetooth状態取得用
+brew install blueutil
 
--- Karabinerプロファイル選択
-mediator.dispatch("input.karabiner.select", { profile = "Laptop" })
-mediator.dispatch("input.karabiner.select", { profile = "Naya Create" })
-mediator.dispatch("input.karabiner.select", { profile = "UHK" })
-
--- 統合プロファイル整合（USB/BT状態から自動選択）
-mediator.dispatch("input.profile.reconcile")
+# Karabiner-Elements（公式サイトからインストール）
+# https://karabiner-elements.pqrs.org/
 ```
 
-## 🔧 設定
+### 新しいUSBデバイスの追加
 
-### 依存関係
+USB監視対象を追加するには `commands/input.lua` を編集：
 
-- **Karabiner-Elements**: キーボードカスタマイズ
-- **blueutil**: Bluetooth状態取得 (`brew install blueutil`)
+```lua
+-- UHKキーボードの例
+local UHK_USB_MATCHERS = {
+  { vendorID = 7504, productID = 24864 }  -- UHK 60 v1
+}
 
-### 対象デバイス
+-- 新しいデバイスを追加
+local CUSTOM_DEVICE_MATCHERS = {
+  { vendorID = 1234, productID = 5678 }   -- あなたのデバイス
+}
+```
 
-現在設定されているキーボード：
+**vendorID/productIDの調べ方**:
+```lua
+-- Hammerspoonコンソールで実行
+hs.inspect(hs.usb.attachedDevices())
+```
 
-- **Naya Create Left** (USB): vendorID=14289, productID=100
-- **Naya Create** (Bluetooth): MAC アドレス e7-b6-78-48-3f-a6
-- **UHK**: 追加設定が必要（`commands/input.lua`の`UHK_USB_MATCHERS`）
+### 新しいBluetoothデバイスの追加
 
-### カスタマイズ
+`repositories/blueutil.lua` を編集：
 
-新しいデバイスやコマンドを追加する場合：
+```lua
+-- 対象デバイス設定
+M.TARGET = {
+  ADDR = "your-device-mac-address",  -- xx:xx:xx:xx:xx:xx 形式
+  NAME = "Your Device Name"
+}
+```
 
-1. **新しいコマンド**: `commands/` 配下に新ファイル作成
-2. **新しいトリガー**: `triggers/` 配下に新ファイル作成
-3. **外部CLI連携**: `repositories/` 配下に新ファイル作成
-4. **登録**: `init.lua`で`require().register()`を追加
+**MACアドレスの調べ方**:
+```bash
+blueutil --paired --format json
+```
 
-## 🛠️ 開発・デバッグ
+### 新しいKarabinerプロファイルの追加
 
-### デバッグコマンド
+`repositories/karabiner.lua` を編集：
+
+```lua
+M.PROFILES = {
+  LAPTOP = "Laptop",
+  NAYA = "Naya Create",
+  UHK = "UHK",
+  CUSTOM = "Your Custom Profile"  -- 追加
+}
+```
+
+`commands/input.lua` の優先順位ロジックも更新：
+
+```lua
+-- 優先順位を変更
+if customDeviceUSB then
+  selectedProfile = karabiner.PROFILES.CUSTOM
+elseif uhkUSB then
+  selectedProfile = karabiner.PROFILES.UHK
+-- ... 以下既存の順序
+```
+
+## 🔧 高度なカスタマイズ
+
+### 新しいホットキーの追加
+
+`triggers/hotkey.lua` を編集：
+
+```lua
+-- 新しいホットキーを追加
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "T", function()
+  log:i("custom hotkey triggered")
+  mediator.dispatch("your.custom.command")
+end)
+```
+
+### 新しいファイル監視の追加
+
+新しいwatcherを作成 `triggers/watchers/custom.lua`：
+
+```lua
+local mediator = require("core.mediator")
+local log = hs.logger.new("custom", "info")
+
+-- ファイル・ディレクトリ監視
+local function onPathChange(files)
+  for _, file in pairs(files) do
+    if file:match("特定のパターン") then
+      mediator.dispatch("your.command", { file = file })
+    end
+  end
+end
+
+local watcher = hs.pathwatcher.new("/path/to/watch", onPathChange)
+watcher:start()
+log:i("custom path watcher started")
+```
+
+`init.lua` で読み込み：
+
+```lua
+require("triggers.watchers.custom")
+```
+
+### 新しいコマンドの追加
+
+新しいコマンドファイル `commands/window.lua` を作成：
+
+```lua
+local M = {}
+local mediator = require("core.mediator")
+local log = hs.logger.new("window", "info")
+
+-- ウィンドウを左半分に配置
+local function snapLeft(payload)
+  local win = hs.window.focusedWindow()
+  if win then
+    local screen = win:screen()
+    local frame = screen:frame()
+    win:setFrame({
+      x = frame.x,
+      y = frame.y,
+      w = frame.w / 2,
+      h = frame.h
+    })
+    log:i("window snapped to left")
+  end
+end
+
+function M.register()
+  mediator.register("window.snap.left", snapLeft)
+  log:i("window commands registered")
+end
+
+return M
+```
+
+`init.lua` で登録：
+
+```lua
+require("commands.window").register()
+```
+
+### 新しい外部CLI連携の追加
+
+新しいrepository `repositories/custom-cli.lua` を作成：
+
+```lua
+local M = {}
+local shell = require("repositories.shell")
+local log = hs.logger.new("custom-cli", "info")
+
+-- CLIコマンドのパス
+local CLI_PATH = "/usr/local/bin/your-cli"
+
+function M.isAvailable()
+  return shell.fileExists(CLI_PATH)
+end
+
+function M.executeAction(args)
+  if not M.isAvailable() then
+    log:e("CLI not found: " .. CLI_PATH)
+    return false
+  end
+  
+  local command = string.format("%q %s", CLI_PATH, args)
+  local output, success = shell.execute(command)
+  
+  if success then
+    log:i("CLI executed successfully")
+  else
+    log:e("CLI execution failed")
+  end
+  
+  return success, output
+end
+
+return M
+```
+
+## � デバッグ・トラブルシューティング
+
+### ログの確認
+
+Hammerspoonコンソール（メニューバー → Console）で確認：
 
 ```lua
 -- 登録されているコマンド一覧
 hs.inspect(require("core.mediator").handlers)
 
--- コマンド実行テスト
+-- 特定のコマンドを手動実行
 require("core.mediator").dispatch("input.profile.reconcile")
 
--- 登録済みコマンド表示
+-- 登録済みコマンド表示（アラート）
 require("core.mediator").showCommands()
 ```
 
-### ログ確認
+### よくある問題
 
-各モジュールでカテゴリ別ログを出力：
+1. **コマンドが見つからない**
+   - `init.lua`で`require().register()`の呼び出しを確認
+   - コマンド名のスペルチェック
 
-- **mediator**: コマンド実行・エラー
-- **usb**: USB接続/切断イベント  
-- **power**: 電源復帰イベント
-- **karabiner**: プロファイル切替
-- **blueutil**: Bluetooth状態
-- **input**: IME・プロファイル整合
+2. **外部CLIが動かない**
+   - パスの確認: `hs.fs.attributes("/path/to/cli")`
+   - 権限の確認: `ls -la /path/to/cli`
 
-### エラーハンドリング
+3. **USBデバイスが認識されない**
+   - `hs.inspect(hs.usb.attachedDevices())` で実際のvendorID/productIDを確認
+   - デバイス名（productName）もチェック
 
-- 全てのコマンド実行で`xpcall`による例外安全性
-- エラー時は`hs.alert.show`で即座に可視化
-- 外部CLI不在時は`hs.notify`で通知
+4. **Bluetoothデバイスが認識されない**
+   - `blueutil --paired --format json` でMACアドレスを確認
+   - ペアリング状態を確認
 
-## 📝 設計思想
+### 設定のリセット
 
-### なぜこのアーキテクチャなのか
+問題が解決しない場合：
 
-1. **理解しやすさ**: 起点（何が起こすか）と処理（何をするか）が追いやすい
-2. **変更容易性**: トリガや外部CLIを差し替えても、コマンドの呼び出し規約は固定
-3. **堅牢性**: 例外時にアラート・ログが必ず出る
-4. **小さく始めて拡張可能**: 領域ごとにファイル追加でスケール
+```lua
+-- Hammerspoonコンソールで実行
+hs.reload()  -- 設定リロード
+hs.relaunch()  -- Hammerspoon再起動
+```
 
-### EventBusを使わない理由
+## � ファイル構造
 
-- 1人開発＋中小規模では、イベントの発行先が分散すると"糸"を見失いやすい
-- 中央（Mediator）に"何を呼ぶか"を集めておく方が、**後日読み返しやすい**
+```
+~/.hammerspoon/
+├─ README.md                 # このファイル
+├─ ARCHITECTURE.md          # アーキテクチャ詳細
+├─ init.lua                  # エントリーポイント
+├─ core/                     # 基盤システム
+├─ commands/                 # ビジネスロジック
+├─ triggers/                 # イベント起点
+├─ repositories/            # 外部連携
+└─ Spoons/                  # Hammerspoon標準
+```
 
-## 🔄 移行履歴
-
-このアーキテクチャは、既存のモノリシックな`init.lua`から段階的にリアーキテクティングしたものです：
-
-- **Before**: 500行超の単一ファイル
-- **After**: 機能別に分割された構造化設計
-- **互換性**: 既存の全機能を維持
+詳細なアーキテクチャについては [ARCHITECTURE.md](./ARCHITECTURE.md) をご覧ください。
 
 ## 📄 ライセンス
 
 MIT License
-
-## 🤝 コントリビューション
-
-1. 新機能は該当する`commands/`、`triggers/`、`repositories/`に追加
-2. `init.lua`で登録を忘れずに
-3. エラーハンドリングを適切に実装
-4. コマンド命名規則（`領域.動詞`）に従う
