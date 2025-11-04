@@ -28,7 +28,7 @@ local imeMenubar = hs.menubar.new(true)
 
 -- USB監視用設定
 local UHK_USB_MATCHERS = {
-  -- UHKの vendorID/productID をここに追記（例: { vendorID = 7504, productID = 24864 }）
+  { vendorID = 14248, productID = 3 }  -- UHK 60 v2 (Ultimate Gadget Laboratories)
 }
 
 local NAYA_USB_MATCHER = { vendorID = 14289, productID = 100 }

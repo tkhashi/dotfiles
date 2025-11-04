@@ -12,6 +12,9 @@
 - **USB/Bluetooth監視**: キーボード接続状態を自動検知
 - **優先順位制御**: UHK > Naya(USB) > Naya(BT) > Laptop の順で自動選択
 - **復帰時対応**: スリープ復帰・画面アンロック時に自動で状態確認・切替
+- **対応キーボード**: 
+  - UHK 60 v2 (Ultimate Gadget Laboratories)
+  - Naya Create (USB/Bluetooth)
 
 ### 自動リロード
 - **ファイル監視**: `.lua`ファイルの変更を検知して自動リロード
@@ -39,9 +42,9 @@ brew install blueutil
 USB監視対象を追加するには `commands/input.lua` を編集：
 
 ```lua
--- UHKキーボードの例
+-- UHKキーボードの例（現在対応済み）
 local UHK_USB_MATCHERS = {
-  { vendorID = 7504, productID = 24864 }  -- UHK 60 v1
+  { vendorID = 14248, productID = 3 }  -- UHK 60 v2 (Ultimate Gadget Laboratories)
 }
 
 -- 新しいデバイスを追加
