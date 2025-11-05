@@ -16,4 +16,10 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
   end)
 end)
 
+-- プロファイル手動切り替え: Ctrl+Alt+Cmd+P
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "P", function()
+  log:i("manual profile reconcile triggered")
+  mediator.dispatch("input.profile.reconcile")
+end)
+
 log:i("hotkey triggers registered")

@@ -7,7 +7,7 @@ local M = {}
 local mediator = require("core.mediator")
 local karabiner = require("repositories.karabiner")
 local blueutil = require("repositories.blueutil")
-local log = hs.logger.new("input", "info")
+local log = hs.logger.new("input", "info")  -- デバッグレベルを本番用に戻す
 
 -- IME表示スタイル（既存設定を移植）
 local alertStyle = {
@@ -139,8 +139,14 @@ local function profileReconcile(payload)
       selectedProfile = karabiner.PROFILES.LAPTOP
     end
 
-    log:i("reconciled profile: " .. selectedProfile)
-    karabiner.selectProfile(selectedProfile)
+    -- 現在のプロファイルと比較して変更が必要かチェック
+    local currentProfile = karabiner.getCurrentProfile()
+    if currentProfile ~= selectedProfile then
+      log:i("switching profile: " .. (currentProfile or "unknown") .. " → " .. selectedProfile)
+      karabiner.selectProfile(selectedProfile)
+    else
+      log:d("profile unchanged: " .. selectedProfile)
+    end
   end)
 end
 

@@ -4,7 +4,7 @@
 -- luacheck: globals hs usbWatcher
 
 local mediator = require("core.mediator")
-local log = hs.logger.new("usb", "info")
+local log = hs.logger.new("usb", "info")  -- デバッグレベルを本番用に戻す
 
 -- デバウンス付きの整合実行
 local usbChangeTimer
@@ -31,22 +31,36 @@ local function reconcileAfter(delay, reason)
   end)
 end
 
+-- 監視対象デバイス設定
+local MONITORED_DEVICES = {
+  {vid = 14289, pid = 100, name = "Naya Create Left", type = "naya", productName = "Naya Create Left"},
+  {vid = 14248, pid = 3, name = "UHK 60 v2", type = "uhk"}
+}
+
 -- USB機器変更の処理
 local function handleUSB(dev)
-  -- Naya Create Left の監視
-  if dev.vendorID == 14289 and dev.productID == 100 and dev.productName == "Naya Create Left" then
-    if dev.eventType == "added" then
-      log:i("Naya USB added")
-      reconcileAfter(0.1, "naya-usb-added")
-    elseif dev.eventType == "removed" then
-      log:i("Naya USB removed")  
-      reconcileAfter(0.3, "naya-usb-removed")
+  -- 監視対象デバイスかチェック
+  for _, device in ipairs(MONITORED_DEVICES) do
+    local isMatch = dev.vendorID == device.vid and dev.productID == device.pid
+    -- productNameが指定されている場合は名前もチェック
+    if device.productName then
+      isMatch = isMatch and dev.productName == device.productName
     end
-  else
-    -- その他のUSB機器でも軽く整合
-    log:d("other USB device changed: " .. (dev.productName or "unknown"))
-    -- reconcileAfter(0.3, "other-usb-change")
+    
+    if isMatch then
+      if dev.eventType == "added" then
+        log:i(device.name .. " USB added")
+        reconcileAfter(0.1, device.type .. "-usb-added")
+      elseif dev.eventType == "removed" then
+        log:i(device.name .. " USB removed")  
+        reconcileAfter(0.3, device.type .. "-usb-removed")
+      end
+      return -- マッチしたので他のデバイスはチェック不要
+    end
   end
+  
+  -- 監視対象外デバイスは軽くログ出力のみ
+  log:d("other USB device changed: " .. (dev.productName or "unknown"))
 end
 
 -- 既存のusbWatcherを停止（もしあれば）
