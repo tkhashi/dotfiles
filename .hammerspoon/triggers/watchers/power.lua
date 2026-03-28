@@ -22,6 +22,12 @@ local function handlePowerEvent(eventType)
   hs.timer.doAfter(0.5, function()
     log:i("power event reconcile triggered")
     mediator.dispatch("input.profile.reconcile")
+
+    -- 追い判定（デバイス状態が遅れて安定するケースの保険）
+    hs.timer.doAfter(1.2, function()
+      log:d("power event delayed reconcile")
+      mediator.dispatch("input.profile.reconcile")
+    end)
   end)
 end
 
