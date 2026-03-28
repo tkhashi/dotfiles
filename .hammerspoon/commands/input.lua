@@ -141,11 +141,12 @@ local function profileReconcile(payload)
 
     -- 現在のプロファイルと比較して変更が必要かチェック
     local currentProfile = karabiner.getCurrentProfile()
+    log:i("current profile: " .. (currentProfile or "(unknown)") .. ", target: " .. selectedProfile)
     if currentProfile ~= selectedProfile then
       log:i("switching profile: " .. (currentProfile or "unknown") .. " → " .. selectedProfile)
       karabiner.selectProfile(selectedProfile)
     else
-      log:d("profile unchanged: " .. selectedProfile)
+      log:i("profile already correct: " .. selectedProfile .. " (no CLI call needed)")
     end
   end)
 end
