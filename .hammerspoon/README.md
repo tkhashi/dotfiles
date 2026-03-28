@@ -78,7 +78,8 @@ blueutil --paired --format json
 
 ### 新しいKarabinerプロファイルの追加
 
-`repositories/karabiner.lua` を編集：
+KarabinerElement側でプロファイル名を`repositories/karabiner.lua`のプロファイル名と一致させる
+`repositories/karabiner.lua`を編集：
 
 ```lua
 M.PROFILES = {
