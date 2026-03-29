@@ -23,9 +23,6 @@ local alertStyle = {
   padding = 10,
 }
 
--- IMEメニューバー
-local imeMenubar = hs.menubar.new(true)
-
 -- USB監視用設定
 local UHK_USB_MATCHERS = {
   { vendorID = 14248, productID = 3 }  -- UHK 60 v2 (Ultimate Gadget Laboratories)
@@ -93,9 +90,6 @@ local function imeFlash(payload)
   local label = getIMELabel()
   hs.alert.closeAll(0.0)
   hs.alert.show(label, alertStyle, hs.screen.mainScreen(), 0.5)
-  if imeMenubar then 
-    imeMenubar:setTitle(label) 
-  end
   log:d("IME flash: " .. label)
 end
 
@@ -155,22 +149,12 @@ end
 --- 初期化とコマンド登録
 ---
 
--- IMEメニューバーの初期化
-local function initIMEMenubar()
-  if imeMenubar then 
-    imeMenubar:setTitle(getIMELabel()) 
-  end
-end
-
 -- コマンドをMediatorに登録
 function M.register()
   mediator.register("input.ime.flash", imeFlash)
   mediator.register("input.karabiner.select", karabinerSelect)
   mediator.register("input.profile.reconcile", profileReconcile)
-  
-  -- IMEメニューバー初期化
-  initIMEMenubar()
-  
+
   log:i("input commands registered")
 end
 
