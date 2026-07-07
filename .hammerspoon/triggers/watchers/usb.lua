@@ -33,8 +33,9 @@ end
 
 -- 監視対象デバイス設定
 local MONITORED_DEVICES = {
-  {vid = 14289, pid = 100, name = "Naya Create Left", type = "naya", productName = "Naya Create Left"},
-  {vid = 14248, pid = 3, name = "UHK 60 v2", type = "uhk"}
+  {vid = 14289, pid = 100,   name = "Naya Create Left", type = "naya",    productName = "Naya Create Left"},
+  {vid = 14248, pid = 3,     name = "UHK 60 v2",        type = "uhk"},
+  {vid = 10374, pid = 32809, name = "NocFree & ANSI",   type = "nocfree"},
 }
 
 -- USB機器変更の処理

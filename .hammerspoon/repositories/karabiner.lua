@@ -13,9 +13,10 @@ local KARABINER_CLI = "/Library/Application Support/org.pqrs/Karabiner-Elements/
 -- プロファイル定数
 -- Karabinerのプロファイル名が下記と一致する必要がある
 M.PROFILES = {
-  LAPTOP = "Laptop",
-  NAYA = "Naya Create", 
-  UHK = "UHK"
+  LAPTOP  = "Laptop",
+  NAYA    = "Naya Create",
+  UHK     = "UHK",
+  NOCFREE = "NocFree&",
 }
 
 -- Karabiner CLIの存在確認

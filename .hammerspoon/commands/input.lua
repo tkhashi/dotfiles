@@ -28,7 +28,8 @@ local UHK_USB_MATCHERS = {
   { vendorID = 14248, productID = 3 }  -- UHK 60 v2 (Ultimate Gadget Laboratories)
 }
 
-local NAYA_USB_MATCHER = { vendorID = 14289, productID = 100 }
+local NAYA_USB_MATCHER    = { vendorID = 14289, productID = 100 }
+local NOCFREE_USB_MATCHER = { vendorID = 10374, productID = 32809 }
 
 ---
 --- ユーティリティ関数
@@ -80,6 +81,11 @@ local function isNayaUsbPresent()
   return usbHasAny({ NAYA_USB_MATCHER })
 end
 
+-- NocFree& USB が接続されているか確認
+local function isNocFreeUsbPresent()
+  return usbHasAny({ NOCFREE_USB_MATCHER })
+end
+
 ---
 --- コマンド実装
 ---
@@ -114,20 +120,22 @@ local function profileReconcile(payload)
   
   -- 少し待ってから状態確認（デバイス状態の安定化を待つ）
   hs.timer.doAfter(0.6, function()
-    local uhkUSB  = usbHasAny(UHK_USB_MATCHERS)
-    local nayaUSB = isNayaUsbPresent()
-    local nayaBT  = blueutil.isTargetConnected()
+    local uhkUSB     = usbHasAny(UHK_USB_MATCHERS)
+    local nocfreeUSB = isNocFreeUsbPresent()
+    local nocfreeBT  = blueutil.isDeviceConnected(blueutil.NOCFREE.ADDR)
+    local nayaUSB    = isNayaUsbPresent()
+    local nayaBT     = blueutil.isTargetConnected()
 
-    log:i(string.format("device state - UHK USB: %s, Naya USB: %s, Naya BT: %s",
-      tostring(uhkUSB), tostring(nayaUSB), tostring(nayaBT)))
+    log:i(string.format("device state - UHK USB: %s, NocFree USB: %s, NocFree BT: %s, Naya USB: %s, Naya BT: %s",
+      tostring(uhkUSB), tostring(nocfreeUSB), tostring(nocfreeBT), tostring(nayaUSB), tostring(nayaBT)))
 
-    -- 優先順位: UHK > Naya(USB) > Naya(BT) > Laptop
+    -- 優先順位: UHK > NocFree(USB) > NocFree(BT) > Naya(USB) > Naya(BT) > Laptop
     local selectedProfile
     if uhkUSB then
       selectedProfile = karabiner.PROFILES.UHK
-    elseif nayaUSB then
-      selectedProfile = karabiner.PROFILES.NAYA
-    elseif nayaBT then
+    elseif nocfreeUSB or nocfreeBT then
+      selectedProfile = karabiner.PROFILES.NOCFREE
+    elseif nayaUSB or nayaBT then
       selectedProfile = karabiner.PROFILES.NAYA
     else
       selectedProfile = karabiner.PROFILES.LAPTOP

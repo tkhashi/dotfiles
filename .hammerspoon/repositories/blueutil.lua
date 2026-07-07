@@ -22,6 +22,11 @@ M.TARGET = {
   NAME = "Naya Create"
 }
 
+M.NOCFREE = {
+  ADDR = "c8-49-68-c2-70-35",
+  NAME = "NocFree&"
+}
+
 -- blueutil のパスを取得
 -- @return string|nil blueutil のパス
 local function getBlueutil()
