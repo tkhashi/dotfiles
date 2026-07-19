@@ -103,12 +103,11 @@ function git_clone_auto() {
 
 alias gitclone='git_clone_auto'
 
-
-
-
 . "$HOME/.local/bin/env"
 source /Users/kazuhiro.takahashi/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
 
-
 # Added by Antigravity CLI installer
 export PATH="/Users/kazuhiro.takahashi/.local/bin:$PATH"
+
+# uv setting
+export UV_MALWARE_CHECK=1
