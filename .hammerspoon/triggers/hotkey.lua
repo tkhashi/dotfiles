@@ -8,7 +8,7 @@ local log = hs.logger.new("hotkey", "info")
 
 -- 手動リロード: Ctrl+Alt+Cmd+R
 -- hs.reload() は即座に Lua ステートを破棄するため、それ以降のコードは実行されない
--- リロード後の reconcile は init.lua の起動時整合 (doAfter(1.0)) が担う
+-- リロード後の reconcile は init.lua の起動時整合（複数回リトライ）が担う
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
   log:i("manual reload triggered")
   hs.reload()

@@ -48,7 +48,12 @@ end)
 hs.alert.show("Hammerspoon ready", 1.0)
 
 -- 起動時のプロファイル整合（既存機能の維持）
-hs.timer.doAfter(1.0, function()
-  local mediator = require("core.mediator")
-  mediator.dispatch("input.profile.reconcile")
-end)
+-- reload直後はBlueutil呼び出しが安定するまで一瞬ラグが出ることがあるため、
+-- power.lua と同様に複数回リトライする
+local STARTUP_RECONCILE_DELAYS = { 1.0, 2.5, 5 } -- 秒（起動/reloadからの経過時間）
+for i, delay in ipairs(STARTUP_RECONCILE_DELAYS) do
+  hs.timer.doAfter(delay, function()
+    local mediator = require("core.mediator")
+    mediator.dispatch("input.profile.reconcile")
+  end)
+end

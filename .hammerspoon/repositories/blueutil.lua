@@ -16,14 +16,39 @@ local BLUEUTIL_PATHS = {
 -- 動的に見つけたblueutil パス
 local _blueutil_path = nil
 
+-- Bluetooth権限エラーの警告を出したかどうか（1セッション1回のみ通知）
+local _permissionWarned = false
+
+-- blueutil実行結果がBluetooth API権限エラーかどうかを判定
+-- @param output string blueutilの標準出力+標準エラー
+-- @return boolean 権限エラーかどうか
+local function isPermissionError(output)
+  return type(output) == "string" and output:lower():match("bluetooth api") ~= nil
+end
+
+-- 権限エラーを検知した場合、目に見える形で1度だけ警告する
+-- @param output string blueutilの実行結果
+local function warnIfPermissionError(output)
+  if _permissionWarned or not isPermissionError(output) then return end
+  _permissionWarned = true
+  log:e("blueutil: Bluetooth API access denied. Hammerspoon needs Bluetooth permission.")
+  hs.notify.new({
+    title = "Hammerspoon: Bluetooth権限不足",
+    informativeText = "システム設定 > プライバシーとセキュリティ > Bluetooth で Hammerspoon を許可してください。許可するまでKarabinerのBTデバイス自動判定は動作しません。"
+  }):send()
+end
+
 -- 対象デバイス設定
 M.TARGET = {
   ADDR = "e7-b6-78-48-3f-a6",
   NAME = "Naya Create"
 }
 
+-- NocFree& はBLEマルチチャンネル対応キーボードで、チャンネル(BLE1/BLE2/BLE3)ごとに
+-- 異なるBluetoothアドレスを持つ。接続中のチャンネルは切替可能なため固定アドレスでは
+-- 判定できず、名前の部分一致（NAME_PATTERN）で判定する
 M.NOCFREE = {
-  ADDR = "c8-49-68-c2-70-35",
+  NAME_PATTERN = "nocfree",
   NAME = "NocFree&"
 }
 
@@ -95,6 +120,9 @@ function M.getPairedDevices(callback)
         else
           log:e("failed to parse JSON output")
         end
+      else
+        warnIfPermissionError(output)
+        log:e("blueutil command failed or returned no JSON: " .. tostring(output))
       end
       log:d("found " .. #devices .. " paired devices")
       callback(devices)
@@ -110,6 +138,9 @@ function M.getPairedDevices(callback)
       else
         log:e("failed to parse JSON output")
       end
+    else
+      warnIfPermissionError(output)
+      log:e("blueutil command failed or returned no JSON: " .. tostring(output))
     end
     log:d("found " .. #devices .. " paired devices")
     return devices
@@ -158,6 +189,45 @@ end
 -- @return boolean 同期実行時の接続状態
 function M.isTargetConnected(callback)
   return M.isDeviceConnected(M.TARGET.ADDR, callback)
+end
+
+-- 名前パターンに部分一致する接続済みペアリングデバイスがあるか確認
+-- @param namePattern string 名前の部分一致パターン（大小文字区別なし）
+-- @param callback function(connected) コールバック関数（省略可）
+-- @return boolean 同期実行時の接続状態
+function M.isDeviceConnectedByName(namePattern, callback)
+  namePattern = (namePattern or ""):lower()
+
+  local function matchConnected(devices)
+    for _, dev in ipairs(devices) do
+      local name = (dev.name or ""):lower()
+      if name:find(namePattern, 1, true) and (dev.connected == 1 or dev.connected == true) then
+        return true
+      end
+    end
+    return false
+  end
+
+  if callback and type(callback) == "function" then
+    M.getPairedDevices(function(devices)
+      local connected = matchConnected(devices)
+      log:d("device matching '" .. namePattern .. "' connected: " .. tostring(connected))
+      callback(connected)
+    end)
+  else
+    local devices = M.getPairedDevices()
+    local connected = matchConnected(devices)
+    log:d("device matching '" .. namePattern .. "' connected: " .. tostring(connected))
+    return connected
+  end
+end
+
+-- NocFree&（BLEマルチチャンネル）の接続状態を確認
+-- チャンネル(BLE1/BLE2/BLE3)ごとにアドレスが変わるため名前一致で判定する
+-- @param callback function(connected) コールバック関数（省略可）
+-- @return boolean 同期実行時の接続状態
+function M.isNocFreeConnected(callback)
+  return M.isDeviceConnectedByName(M.NOCFREE.NAME_PATTERN, callback)
 end
 
 return M

@@ -122,7 +122,7 @@ local function profileReconcile(payload)
   hs.timer.doAfter(0.6, function()
     local uhkUSB     = usbHasAny(UHK_USB_MATCHERS)
     local nocfreeUSB = isNocFreeUsbPresent()
-    local nocfreeBT  = blueutil.isDeviceConnected(blueutil.NOCFREE.ADDR)
+    local nocfreeBT  = blueutil.isNocFreeConnected()
     local nayaUSB    = isNayaUsbPresent()
     local nayaBT     = blueutil.isTargetConnected()
 

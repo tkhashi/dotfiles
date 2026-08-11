@@ -7,6 +7,10 @@ local mediator = require("core.mediator")
 local log = hs.logger.new("power", "info")
 
 -- 復帰時の処理
+-- Bluetooth機器の再接続はmacOS側で数秒〜十数秒かかることがあるため、
+-- 打ち切りを早めず複数回にわたってプロファイル整合を試みる
+local RECONCILE_DELAYS = { 0.5, 2, 4, 7, 11, 15 } -- 秒（wakeイベントからの経過時間）
+
 local function handlePowerEvent(eventType)
   if eventType == hs.caffeinate.watcher.systemDidWake then
     log:i("system did wake")
@@ -17,18 +21,13 @@ local function handlePowerEvent(eventType)
   else
     return -- 対象外のイベント
   end
-  
-  -- 少し遅延してからプロファイル整合を実行
-  hs.timer.doAfter(0.5, function()
-    log:i("power event reconcile triggered")
-    mediator.dispatch("input.profile.reconcile")
 
-    -- 追い判定（デバイス状態が遅れて安定するケースの保険）
-    hs.timer.doAfter(1.2, function()
-      log:d("power event delayed reconcile")
+  for i, delay in ipairs(RECONCILE_DELAYS) do
+    hs.timer.doAfter(delay, function()
+      log:i(string.format("power event reconcile attempt %d/%d (+%.1fs)", i, #RECONCILE_DELAYS, delay))
       mediator.dispatch("input.profile.reconcile")
     end)
-  end)
+  end
 end
 
 -- 既存のwakeWatcherを停止（もしあれば）
